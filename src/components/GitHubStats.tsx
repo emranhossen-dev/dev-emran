@@ -1,0 +1,317 @@
+'use client';
+
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { GithubIcon } from './BrandIcons';
+
+const GITHUB_USERNAME = 'emranhossen-dev';
+
+// GitHub's exact dark-theme contribution colors
+const COLORS = {
+  empty: '#161b22',
+  level1: '#0e4429',
+  level2: '#006d32',
+  level3: '#26a641',
+  level4: '#39d353',
+};
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+
+interface DayData {
+  date: string;
+  count: number;
+  level: number;
+}
+
+interface WeekData {
+  days: DayData[];
+}
+
+interface ApiContribution {
+  date: string;
+  count: number;
+  level: number;
+}
+
+function getColorForLevel(level: number): string {
+  switch (level) {
+    case 1: return COLORS.level1;
+    case 2: return COLORS.level2;
+    case 3: return COLORS.level3;
+    case 4: return COLORS.level4;
+    default: return COLORS.empty;
+  }
+}
+
+function parseContributions(contributions: ApiContribution[]): { weeks: WeekData[]; total: number } {
+  if (!contributions || contributions.length === 0) return { weeks: [], total: 0 };
+
+  let total = 0;
+  const weeks: WeekData[] = [];
+  let currentWeek: DayData[] = [];
+
+  // The API returns days in order, starting from a Sunday
+  // First entry's day-of-week tells us if we need padding
+  const firstDate = new Date(contributions[0].date + 'T00:00:00');
+  const firstDayOfWeek = firstDate.getDay(); // 0=Sun
+
+  // Pad the first week if it doesn't start on Sunday
+  for (let i = 0; i < firstDayOfWeek; i++) {
+    currentWeek.push({ date: '', count: 0, level: 0 });
+  }
+
+  for (const day of contributions) {
+    total += day.count;
+    currentWeek.push({
+      date: day.date,
+      count: day.count,
+      level: day.level,
+    });
+
+    if (currentWeek.length === 7) {
+      weeks.push({ days: currentWeek });
+      currentWeek = [];
+    }
+  }
+
+  // Push remaining partial week
+  if (currentWeek.length > 0) {
+    while (currentWeek.length < 7) {
+      currentWeek.push({ date: '', count: 0, level: 0 });
+    }
+    weeks.push({ days: currentWeek });
+  }
+
+  return { weeks, total };
+}
+
+function getMonthLabels(weeks: WeekData[]): { month: string; col: number }[] {
+  const labels: { month: string; col: number }[] = [];
+  let lastMonth = -1;
+
+  weeks.forEach((week, colIndex) => {
+    const firstDay = week.days.find(d => d.date !== '');
+    if (firstDay) {
+      const month = new Date(firstDay.date + 'T00:00:00').getMonth();
+      if (month !== lastMonth) {
+        labels.push({ month: MONTHS[month], col: colIndex });
+        lastMonth = month;
+      }
+    }
+  });
+
+  return labels;
+}
+
+export default function GitHubStats() {
+  const [weeks, setWeeks] = useState<WeekData[]>([]);
+  const [totalContributions, setTotalContributions] = useState(0);
+  const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const fetchContributions = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/api/github-contributions');
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+
+      const contributions: ApiContribution[] = data.contributions || [];
+      const { weeks: parsedWeeks, total } = parseContributions(contributions);
+
+      setWeeks(parsedWeeks);
+      setTotalContributions(total);
+      setError(false);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(fetchContributions, 0);
+    return () => clearTimeout(timer);
+  }, [fetchContributions]);
+
+  const monthLabels = weeks.length > 0 ? getMonthLabels(weeks) : [];
+
+  // Calculate dimensions — full width responsive
+  const CELL_SIZE = 11;
+  const CELL_GAP = 3;
+  const LABEL_WIDTH = 34;
+  const HEADER_HEIGHT = 20;
+  const totalCols = weeks.length;
+  const svgWidth = LABEL_WIDTH + totalCols * (CELL_SIZE + CELL_GAP);
+  const svgHeight = HEADER_HEIGHT + 7 * (CELL_SIZE + CELL_GAP);
+
+  return (
+    <section id="github" className="py-24 relative overflow-hidden">
+      <div className="absolute top-1/4 left-10 w-[350px] h-[350px] rounded-full bg-emerald-500/5 dark:bg-emerald-500/3 blur-[90px] animate-pulse-glow" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-800/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
+            Open Source
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+            GitHub <span className="text-gradient">Activity</span>
+          </h2>
+          <p className="mt-4 text-slate-500 dark:text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
+            My real-time contribution history — shipping code consistently.
+          </p>
+        </div>
+
+        {/* GitHub Profile Link */}
+        <div className="flex justify-center mb-8">
+          <a
+            href={`https://github.com/${GITHUB_USERNAME}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm hover:border-indigo-300/50 dark:hover:border-indigo-700/50 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300 group"
+          >
+            <GithubIcon className="w-6 h-6 text-slate-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
+            <div className="text-left">
+              <p className="text-sm font-bold text-slate-900 dark:text-white">@{GITHUB_USERNAME}</p>
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500">View Full Profile →</p>
+            </div>
+          </a>
+        </div>
+
+        {/* Contribution Graph — Full Width GitHub-style */}
+        <div className="w-full p-4 sm:p-6 rounded-2xl bg-[#0d1117] border border-[#30363d]">
+
+          {/* Title */}
+          <p className="text-sm font-semibold text-[#c9d1d9] mb-4">
+            {loading ? 'Loading contributions...' : error ? 'Could not load contributions' : `${totalContributions.toLocaleString()} contributions in the last year`}
+          </p>
+
+          {/* SVG Graph — uses viewBox for full-width scaling */}
+          {!loading && !error && weeks.length > 0 && (
+            <div ref={containerRef} className="w-full relative" onMouseLeave={() => setTooltip(null)}>
+              <svg
+                viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+                className="w-full h-auto"
+                preserveAspectRatio="xMinYMin meet"
+              >
+                {/* Month labels */}
+                {monthLabels.map((label, i) => (
+                  <text
+                    key={i}
+                    x={LABEL_WIDTH + label.col * (CELL_SIZE + CELL_GAP)}
+                    y={12}
+                    fill="#8b949e"
+                    fontSize="10"
+                    fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+                  >
+                    {label.month}
+                  </text>
+                ))}
+
+                {/* Day labels */}
+                {DAYS.map((day, i) => (
+                  day && (
+                    <text
+                      key={i}
+                      x={0}
+                      y={HEADER_HEIGHT + i * (CELL_SIZE + CELL_GAP) + CELL_SIZE - 1}
+                      fill="#8b949e"
+                      fontSize="10"
+                      fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+                    >
+                      {day}
+                    </text>
+                  )
+                ))}
+
+                {/* Contribution squares */}
+                {weeks.map((week, colIndex) =>
+                  week.days.map((day, rowIndex) => {
+                    if (!day.date) return null;
+                    const x = LABEL_WIDTH + colIndex * (CELL_SIZE + CELL_GAP);
+                    const y = HEADER_HEIGHT + rowIndex * (CELL_SIZE + CELL_GAP);
+                    return (
+                      <rect
+                        key={`${colIndex}-${rowIndex}`}
+                        x={x}
+                        y={y}
+                        width={CELL_SIZE}
+                        height={CELL_SIZE}
+                        rx={2}
+                        ry={2}
+                        fill={getColorForLevel(day.level)}
+                        className="cursor-pointer"
+                        style={{ outline: 'none' }}
+                        onMouseEnter={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const parentRect = containerRef.current?.getBoundingClientRect();
+                          if (parentRect) {
+                            setTooltip({
+                              text: day.count === 0
+                                ? `No contributions on ${new Date(day.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
+                                : `${day.count} contribution${day.count !== 1 ? 's' : ''} on ${new Date(day.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
+                              x: rect.left - parentRect.left + rect.width / 2,
+                              y: rect.top - parentRect.top - 8,
+                            });
+                          }
+                        }}
+                        onMouseLeave={() => setTooltip(null)}
+                      />
+                    );
+                  })
+                )}
+              </svg>
+
+              {/* Tooltip */}
+              {tooltip && (
+                <div
+                  className="absolute pointer-events-none z-20 px-3 py-1.5 rounded-lg bg-[#1b1f23] border border-[#484f58] text-[11px] text-[#c9d1d9] font-semibold whitespace-nowrap shadow-xl"
+                  style={{
+                    left: tooltip.x,
+                    top: tooltip.y,
+                    transform: 'translate(-50%, -100%)',
+                  }}
+                >
+                  {tooltip.text}
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-[#484f58]" />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Loading skeleton */}
+          {loading && (
+            <div className="w-full h-[120px] rounded-xl bg-[#161b22] animate-pulse flex items-center justify-center">
+              <span className="text-xs text-[#8b949e]">Fetching real-time data from GitHub...</span>
+            </div>
+          )}
+
+          {/* Error state */}
+          {error && !loading && (
+            <div className="w-full h-[120px] rounded-xl bg-[#161b22] flex items-center justify-center">
+              <span className="text-xs text-[#8b949e]">Unable to load contribution data. <button onClick={fetchContributions} className="text-[#39d353] hover:underline cursor-pointer">Retry</button></span>
+            </div>
+          )}
+
+          {/* Legend */}
+          <div className="flex items-center justify-end gap-2 mt-4">
+            <span className="text-[11px] text-[#8b949e]">Less</span>
+            {[COLORS.empty, COLORS.level1, COLORS.level2, COLORS.level3, COLORS.level4].map((color, i) => (
+              <div
+                key={i}
+                className="w-[10px] h-[10px] rounded-sm"
+                style={{ backgroundColor: color }}
+              />
+            ))}
+            <span className="text-[11px] text-[#8b949e]">More</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}

@@ -1,26 +1,190 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+@theme {
+  --font-sans: 'Outfit', 'Inter', var(--font-geist-sans), sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background-base: #f8fafc;
+  --foreground-base: #0f172a;
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --card-bg: rgba(255, 255, 255, 0.55);
+  --accent-glow: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.04) 70%, transparent 100%);
+  --text-muted: #475569;
+  --border-color: rgba(15, 23, 42, 0.06);
+  --nav-bg: rgba(255, 255, 255, 0.6);
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+}
+
+.dark {
+  --background-base: #030712;
+  --foreground-base: #f9fafb;
+  --glass-bg: rgba(17, 24, 39, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(17, 24, 39, 0.55);
+  --accent-glow: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, rgba(236, 72, 153, 0.03) 70%, transparent 100%);
+  --text-muted: #9ca3af;
+  --border-color: rgba(255, 255, 255, 0.06);
+  --nav-bg: rgba(3, 7, 18, 0.45);
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+}
+
+html, body {
+  background: var(--background-base);
+  color: var(--foreground-base);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+}
+
+.dark .glass-card {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Keyframe Animations */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes float-slow {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(-1.5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 10s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+
+.blink-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shimmer effect for progress bars */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Print layout optimizations for Resume download */
+@media print {
+  html, body {
+    background: white !important;
+    color: black !important;
+  }
+  header, footer, section, button, .glass-panel, .glass-card {
+    display: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    background: none !important;
+    border: none !important;
+  }
+  #resume-printable-area {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+    visibility: visible !important;
+  }
+  #resume-printable-area * {
+    visibility: visible !important;
+    color: black !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
