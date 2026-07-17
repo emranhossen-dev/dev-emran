@@ -1,5 +1,3 @@
-'use client';
-
 import { Briefcase, GraduationCap, Calendar, MapPin, ExternalLink } from 'lucide-react';
 
 export default function EducationExperience() {
