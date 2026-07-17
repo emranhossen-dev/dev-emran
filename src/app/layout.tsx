@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     description: "Professional Full Stack Web Developer from Bangladesh. Expert in React, Next.js, Node.js, Supabase. Building LMS platforms, e-commerce, and developer tools.",
     images: [
       {
-        url: "/emran_photo.jpg",
+        url: "/emran-hossen-full-stack-developer.jpg",
         width: 1200,
         height: 630,
         alt: "Emran Hossen - Full Stack Web Developer",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Emran Hossen | Full Stack Web Developer",
     description: "Professional Full Stack Developer from Bangladesh specializing in React, Next.js, Node.js. Check out my projects and hire me.",
-    images: ["/emran_photo.jpg"],
+    images: ["/emran-hossen-full-stack-developer.jpg"],
   },
   robots: {
     index: true,
@@ -81,7 +81,7 @@ const jsonLd = {
   "@type": "Person",
   name: "Emran Hossen",
   url: "https://emran.work",
-  image: "https://emran.work/emran_photo.jpg",
+  image: "https://emran.work/emran-hossen-full-stack-developer.jpg",
   jobTitle: "Full Stack Web Developer",
   description: "Professional Full Stack Web Developer from Bangladesh specializing in React, Next.js, Node.js, Supabase, PostgreSQL, and MongoDB.",
   email: "emranhossen.dev@gmail.com",
