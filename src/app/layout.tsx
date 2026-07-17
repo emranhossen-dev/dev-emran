@@ -37,6 +37,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://emran.work",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/emran-hossen-full-stack-developer.jpg", type: "image/jpeg", sizes: "32x32" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/emran-hossen-full-stack-developer.jpg",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
