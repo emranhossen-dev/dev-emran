@@ -20,15 +20,15 @@
 }
 
 .dark {
-  --background-base: #030712;
+  --background-base: #0b0f19;
   --foreground-base: #f9fafb;
-  --glass-bg: rgba(17, 24, 39, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --card-bg: rgba(17, 24, 39, 0.55);
-  --accent-glow: radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, rgba(236, 72, 153, 0.03) 70%, transparent 100%);
+  --glass-bg: rgba(30, 41, 59, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --card-bg: rgba(15, 23, 42, 0.4);
+  --accent-glow: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(236, 72, 153, 0.05) 70%, transparent 100%);
   --text-muted: #9ca3af;
-  --border-color: rgba(255, 255, 255, 0.06);
-  --nav-bg: rgba(3, 7, 18, 0.45);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --nav-bg: rgba(11, 15, 25, 0.65);
   --primary-color: #6366f1;
   --primary-hover: #4f46e5;
 }
