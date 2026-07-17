@@ -138,7 +138,7 @@ export default function Hero() {
             {/* Circular photo */}
             <div className="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px] rounded-full overflow-hidden border-4 border-white/20 dark:border-white/10 shadow-2xl animate-float">
               <Image
-                src="/emran-hossen-full-stack-developer.jpg"
+                src="/emran-hossen-full-stack-developer-photo.jpg"
                 alt="Emran Hossen - Professional Full Stack Web Developer and Next.js React Specialist from Bangladesh"
                 fill
                 priority
