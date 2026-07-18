@@ -56,7 +56,7 @@ export default function Contact() {
               
               {/* Email Card */}
               <a
-                href="mailto:emranhossen.dev@gmail.com"
+                href="mailto:dev.emranhossen@gmail.com"
                 className="p-5 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm flex items-center gap-4 group hover:border-indigo-300/40 dark:hover:border-indigo-700/40 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300"
               >
                 <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
@@ -64,7 +64,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Email Me</p>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">emranhossen.dev@gmail.com</p>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">dev.emranhossen@gmail.com</p>
                 </div>
               </a>
 

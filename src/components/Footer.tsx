@@ -40,7 +40,7 @@ export default function Footer() {
             <LinkedinIcon className="w-5 h-5" />
           </a>
           <a
-            href="https://twitter.com"
+            href="https://twitter.com/emranhossen_dev"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"

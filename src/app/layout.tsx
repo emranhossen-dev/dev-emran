@@ -18,17 +18,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
-  description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
+  title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
+  description: "Emran Hossen is a Full Stack Developer with 3+ years of experience building scalable, high-performance web applications. Explore my projects, skills, and resume — open to full-time opportunities.",
   keywords: [
-    "Emran Hossen", "Emran", "Emran dev", "Emran work", "Emran Hossen Bangladesh",
-    "Emran Bangladesh", "developer Emran", "Emran Hossen developer",
-    "Full Stack Developer", "Web Developer", "React Developer",
-    "Next.js Developer", "Node.js Developer", "MERN Stack Developer",
-    "Bangladesh Developer", "Freelance Developer Bangladesh",
-    "emran.work", "Luminous Centre", "IronLocker",
-    "Portfolio", "Hire Developer", "Frontend Developer",
-    "Backend Developer", "Supabase Developer", "PostgreSQL Developer"
+    "Emran Hossen",
+    "Full Stack Developer",
+    "Web Developer Portfolio",
+    "React Developer",
+    "Node.js Developer",
+    "Hire Full Stack Developer"
   ],
   authors: [{ name: "Emran Hossen", url: "https://emran.work" }],
   creator: "Emran Hossen",
@@ -40,21 +38,21 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico" },
-      { url: "/emran-hossen-full-stack-developer.jpg", type: "image/jpeg", sizes: "32x32" }
+      { url: "/emran-hossen-developer-2026.jpg", type: "image/jpeg", sizes: "32x32" }
     ],
     shortcut: "/favicon.ico",
-    apple: "/emran-hossen-full-stack-developer.jpg",
+    apple: "/emran-hossen-developer-2026.jpg",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://emran.work",
     siteName: "Emran Hossen — Developer Portfolio",
-    title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
-    description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
+    title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
+    description: "Full Stack Developer with 3+ years of experience in building modern, scalable web applications. View my portfolio, projects, and get in touch.",
     images: [
       {
-        url: "/emran-hossen-full-stack-developer.jpg",
+        url: "/emran-hossen-developer-2026.jpg",
         width: 1200,
         height: 630,
         alt: "Emran Hossen - Full Stack Web Developer",
@@ -63,9 +61,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
-    description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
-    images: ["/emran-hossen-full-stack-developer.jpg"],
+    title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
+    description: "Full Stack Developer with 3+ years of experience in building modern, scalable web applications. View my portfolio, projects, and get in touch.",
+    images: ["/emran-hossen-developer-2026.jpg"],
+    creator: "@emranhossen_dev",
   },
   robots: {
     index: true,
@@ -89,10 +88,10 @@ const jsonLd = {
   "@type": "Person",
   name: "Emran Hossen",
   url: "https://emran.work",
-  image: "https://emran.work/emran-hossen-full-stack-developer.jpg",
+  image: "https://emran.work/emran-hossen-developer-2026.jpg",
   jobTitle: "Full Stack Web Developer",
   description: "Professional Full Stack Web Developer from Bangladesh specializing in React, Next.js, Node.js, Supabase, PostgreSQL, and MongoDB.",
-  email: "emranhossen.dev@gmail.com",
+  email: "dev.emranhossen@gmail.com",
   telephone: "+8801739642983",
   address: {
     "@type": "PostalAddress",
@@ -100,6 +99,7 @@ const jsonLd = {
   },
   sameAs: [
     "https://github.com/emranhossen-dev",
+    "https://twitter.com/emranhossen_dev",
   ],
   knowsAbout: [
     "React", "Next.js", "Node.js", "TypeScript", "JavaScript",

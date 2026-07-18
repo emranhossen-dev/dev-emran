@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Download, FileText, ArrowRight, X, Phone, Mail } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TwitterIcon, FacebookIcon } from './BrandIcons';
+import { GithubIcon, LinkedinIcon, TwitterIcon } from './BrandIcons';
 
 const titles = [
   "Full Stack Developer",
@@ -93,8 +93,7 @@ export default function Hero() {
             {[
               { href: "https://github.com/emranhossen-dev", icon: <GithubIcon className="w-[18px] h-[18px]" />, label: "GitHub" },
               { href: "https://linkedin.com", icon: <LinkedinIcon className="w-[18px] h-[18px]" />, label: "LinkedIn" },
-              { href: "https://twitter.com", icon: <TwitterIcon className="w-[18px] h-[18px]" />, label: "Twitter" },
-              { href: "https://facebook.com", icon: <FacebookIcon className="w-[18px] h-[18px]" />, label: "Facebook" },
+              { href: "https://twitter.com/emranhossen_dev", icon: <TwitterIcon className="w-[18px] h-[18px]" />, label: "Twitter" },
             ].map((social) => (
               <a
                 key={social.label}
@@ -138,12 +137,12 @@ export default function Hero() {
             {/* Circular photo */}
             <div className="relative w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] md:w-[360px] md:h-[360px] rounded-full overflow-hidden border-4 border-white/20 dark:border-white/10 shadow-2xl animate-float">
               <Image
-                src="/emran-hossen-full-stack-developer-photo.jpg"
+                src="/emran-hossen-developer-2026.jpg"
                 alt="Emran Hossen - Professional Full Stack Web Developer and Next.js React Specialist from Bangladesh"
                 fill
                 priority
                 sizes="(max-width: 640px) 260px, (max-width: 768px) 320px, 360px"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
 
@@ -182,11 +181,11 @@ export default function Hero() {
             <div id="resume-printable-area" className="flex-1 overflow-y-auto p-8 md:p-12 text-slate-800 dark:text-zinc-200 space-y-8 print:p-0 print:text-black">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b-2 border-slate-100 dark:border-zinc-800">
                 <div>
-                  <h1 className="text-3xl font-black text-slate-900 dark:text-white print:text-black">Emran Hossen</h1>
+                  <h2 className="text-3xl font-black text-slate-900 dark:text-white print:text-black">Emran Hossen</h2>
                   <p className="text-indigo-600 dark:text-indigo-400 font-semibold text-lg print:text-indigo-600">Full Stack Web Developer</p>
                 </div>
                 <div className="mt-4 md:mt-0 text-sm space-y-1.5 text-slate-600 dark:text-zinc-400 print:text-black">
-                  <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-indigo-500" /><span>emranhossen.dev@gmail.com</span></div>
+                  <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-indigo-500" /><span>dev.emranhossen@gmail.com</span></div>
                   <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-indigo-500" /><span>+880 1739-642983</span></div>
                   <div className="flex items-center gap-2"><span className="font-bold text-indigo-500">Web</span><span>emran.work</span></div>
                 </div>
