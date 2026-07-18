@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Emran Hossen | Full Stack Web Developer | React, Next.js, Node.js Expert",
-  description: "Portfolio of Emran Hossen — a professional Full Stack Web Developer from Bangladesh specializing in React, Next.js, Node.js, Supabase, PostgreSQL, MongoDB. Building high-performance LMS platforms, e-commerce solutions, and developer tools.",
+  title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
+  description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
   keywords: [
     "Emran Hossen", "Emran", "Emran dev", "Emran work", "Emran Hossen Bangladesh",
     "Emran Bangladesh", "developer Emran", "Emran Hossen developer",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://emran.work",
     siteName: "Emran Hossen — Developer Portfolio",
-    title: "Emran Hossen | Full Stack Web Developer",
-    description: "Professional Full Stack Web Developer from Bangladesh. Expert in React, Next.js, Node.js, Supabase. Building LMS platforms, e-commerce, and developer tools.",
+    title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
+    description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
     images: [
       {
         url: "/emran-hossen-full-stack-developer.jpg",
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emran Hossen | Full Stack Web Developer",
-    description: "Professional Full Stack Developer from Bangladesh specializing in React, Next.js, Node.js. Check out my projects and hire me.",
+    title: "Emran Hossen | Full Stack Web Developer & Next.js Expert",
+    description: "Professional Full Stack Developer from Bangladesh. Expert in React, Next.js, Node.js & Supabase. Crafting high-performance web applications.",
     images: ["/emran-hossen-full-stack-developer.jpg"],
   },
   robots: {
