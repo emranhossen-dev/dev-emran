@@ -90,7 +90,7 @@ export default function EducationExperience() {
                         <div className="flex items-center gap-2 mt-1">
                           <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{exp.company}</p>
                           {exp.link && (
-                            <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-500 transition-colors">
+                            <a href={exp.link} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-500 transition-colors" aria-label={`Visit ${exp.company} website`}>
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                           )}
@@ -110,7 +110,7 @@ export default function EducationExperience() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 text-xs text-slate-400 dark:text-zinc-500">
+                    <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-zinc-400">
                       <MapPin className="w-3 h-3" />
                       {exp.location}
                     </div>
@@ -163,7 +163,7 @@ export default function EducationExperience() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 text-xs text-slate-400 dark:text-zinc-500">
+                    <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-zinc-400">
                       <MapPin className="w-3 h-3" />
                       {edu.location}
                     </div>

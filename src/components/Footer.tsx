@@ -15,7 +15,7 @@ export default function Footer() {
           <p className="text-sm font-semibold text-slate-800 dark:text-zinc-200">
             © {new Date().getFullYear()} Emran Hossen. All rights reserved.
           </p>
-          <p className="text-xs text-slate-500 dark:text-zinc-500">
+          <p className="text-xs text-slate-600 dark:text-zinc-400">
             Built with Next.js, React 19, and Tailwind CSS.
           </p>
         </div>

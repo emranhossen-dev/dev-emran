@@ -127,7 +127,7 @@ export default function AboutMe() {
                 </div>
 
                 <div className="text-center">
-                  <h4 className="text-lg font-extrabold text-slate-900 dark:text-white">Emran Hossen</h4>
+                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">Emran Hossen</h3>
                   <span className="inline-flex items-center gap-1.5 mt-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/15 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     Full Stack Developer
@@ -137,7 +137,7 @@ export default function AboutMe() {
                 {/* Code Snippet */}
                 <div className="w-full rounded-xl bg-slate-50 dark:bg-zinc-900/70 border border-slate-200/60 dark:border-zinc-800/60 font-mono text-[11.5px] leading-relaxed overflow-hidden">
                   <div className="px-4 py-3 text-left">
-                    <p><span className="text-purple-600 dark:text-purple-400">const</span> <span className="text-sky-600 dark:text-sky-400">dev</span> <span className="text-slate-400 dark:text-zinc-500">=</span> &#123;</p>
+                    <p><span className="text-purple-600 dark:text-purple-400">const</span> <span className="text-sky-600 dark:text-sky-400">dev</span> <span className="text-slate-500 dark:text-zinc-400">=</span> &#123;</p>
                     <p className="pl-4"><span className="text-slate-700 dark:text-zinc-300">name:</span> <span className="text-emerald-600 dark:text-emerald-400">&quot;Emran Hossen&quot;</span>,</p>
                     <p className="pl-4"><span className="text-slate-700 dark:text-zinc-300">role:</span> <span className="text-emerald-600 dark:text-emerald-400">&quot;Full Stack Dev&quot;</span>,</p>
                     <p className="pl-4"><span className="text-slate-700 dark:text-zinc-300">stack:</span> <span className="text-amber-600 dark:text-amber-400">[&quot;MERN&quot;, &quot;Next.js&quot;]</span>,</p>
@@ -177,7 +177,7 @@ export default function AboutMe() {
             <div className="space-y-4">
               {stack.map((group) => (
                 <div key={group.group} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500 sm:w-24 shrink-0">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-slate-600 dark:text-zinc-400 sm:w-24 shrink-0">
                     {group.group}
                   </span>
                   <div className="flex flex-wrap gap-2">

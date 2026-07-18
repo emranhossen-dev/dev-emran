@@ -63,7 +63,7 @@ export default function Contact() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 dark:text-zinc-500 uppercase">Email Me</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Email Me</p>
                   <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">emranhossen.dev@gmail.com</p>
                 </div>
               </a>
@@ -77,7 +77,7 @@ export default function Contact() {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 dark:text-zinc-500 uppercase">Call Directly</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Call Directly</p>
                   <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">+880 1739-642983</p>
                 </div>
               </a>
@@ -93,7 +93,7 @@ export default function Contact() {
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 dark:text-zinc-500 uppercase">Send WhatsApp</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Send WhatsApp</p>
                   <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">+880 1739-642983</p>
                 </div>
               </a>
@@ -108,7 +108,7 @@ export default function Contact() {
               
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="form-name" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Name</label>
+                  <label htmlFor="form-name" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Name</label>
                   <input
                     type="text"
                     id="form-name"
@@ -122,7 +122,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="form-email" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Email Address</label>
+                  <label htmlFor="form-email" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Email Address</label>
                   <input
                     type="email"
                     id="form-email"
@@ -136,7 +136,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label htmlFor="form-message" className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Message</label>
+                  <label htmlFor="form-message" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Message</label>
                   <textarea
                     id="form-message"
                     name="message"

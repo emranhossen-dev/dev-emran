@@ -259,7 +259,7 @@ export default function Projects() {
           <div className="relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-zinc-800 flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
 
             <div className="relative w-full h-[220px] sm:h-[280px] shrink-0 bg-slate-100 dark:bg-zinc-950">
-              <Image src={selectedProject.image} alt={`${selectedProject.name} - Full Stack Project Detail by Emran Hossen`} fill className="object-cover object-top" />
+              <Image src={selectedProject.image} alt={`${selectedProject.name} - Full Stack Project Detail by Emran Hossen`} fill sizes="(max-width: 768px) 100vw, 768px" className="object-cover object-top" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
               <button onClick={() => setSelectedProject(null)} className="absolute top-4 right-4 p-2 bg-black/50 text-white rounded-full hover:bg-black/80 hover:scale-105 active:scale-95 transition cursor-pointer" aria-label="Close modal">
                 <X className="w-5 h-5" />
@@ -310,7 +310,7 @@ export default function Projects() {
                   <ExternalLink className="w-4 h-4" /> Live Preview
                 </a>
                 {selectedProject.isGithubPrivate ? (
-                  <div className="flex-1 flex items-center justify-center gap-2 bg-slate-100 dark:bg-zinc-800 text-slate-400 dark:text-zinc-500 py-3 px-6 rounded-xl font-semibold border border-slate-200/60 dark:border-zinc-700/60">
+                  <div className="flex-1 flex items-center justify-center gap-2 bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 py-3 px-6 rounded-xl font-semibold border border-slate-200/60 dark:border-zinc-700/60">
                     <Lock className="w-4 h-4" /> Private Repository
                   </div>
                 ) : (

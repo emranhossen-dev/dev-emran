@@ -177,7 +177,7 @@ export default function GitHubStats() {
             <GithubIcon className="w-6 h-6 text-slate-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
             <div className="text-left">
               <p className="text-sm font-bold text-slate-900 dark:text-white">@{GITHUB_USERNAME}</p>
-              <p className="text-[11px] text-slate-400 dark:text-zinc-500">View Full Profile →</p>
+              <p className="text-[11px] text-slate-600 dark:text-zinc-400">View Full Profile →</p>
             </div>
           </a>
         </div>

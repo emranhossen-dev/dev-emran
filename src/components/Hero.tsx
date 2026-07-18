@@ -14,9 +14,9 @@ const titles = [
 
 export default function Hero() {
   const [titleIndex, setTitleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(100);
+  const [displayText, setDisplayText] = useState(titles[0]);
+  const [isDeleting, setIsDeleting] = useState(true);
+  const [typingSpeed, setTypingSpeed] = useState(2000);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
@@ -142,6 +142,7 @@ export default function Hero() {
                 alt="Emran Hossen - Professional Full Stack Web Developer and Next.js React Specialist from Bangladesh"
                 fill
                 priority
+                sizes="(max-width: 640px) 260px, (max-width: 768px) 320px, 360px"
                 className="object-cover"
               />
             </div>
