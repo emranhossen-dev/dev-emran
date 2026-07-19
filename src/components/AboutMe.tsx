@@ -150,7 +150,7 @@ export default function AboutMe() {
               {/* VS Code-style Status Bar */}
               <div className="bg-indigo-600 dark:bg-indigo-700 px-4 py-2 flex items-center justify-between text-[10px] font-semibold text-white/90">
                 <span className="flex items-center gap-3">
-                  <span>2+ yrs exp</span>
+                  <span>3+ yrs exp</span>
                   <span className="w-1 h-1 rounded-full bg-white/40" />
                   <span>20+ projects</span>
                 </span>
