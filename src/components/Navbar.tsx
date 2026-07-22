@@ -78,7 +78,7 @@ export default function Navbar() {
         {/* Glassmorphic background layer */}
         <div className={`absolute inset-0 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/70 dark:bg-zinc-950/70 backdrop-blur-2xl border-b border-slate-200/40 dark:border-zinc-800/40'
+            ? 'bg-white/80 dark:bg-[#0b1426]/80 backdrop-blur-2xl border-b border-slate-200/40 dark:border-white/10'
             : 'bg-transparent'
         }`} />
 
