@@ -199,7 +199,6 @@ const frontend: Skill[] = [
   { name: 'Next.js',        icon: cdnIcon('nextjs/nextjs-original.svg', false, '#fff') },
   { name: 'Tailwind CSS',   icon: cdnIcon('tailwindcss/tailwindcss-original.svg') },
   { name: 'Bootstrap',      icon: cdnIcon('bootstrap/bootstrap-original.svg') },
-  { name: 'Sass',           icon: cdnIcon('sass/sass-original.svg') },
   { name: 'shadcn/ui',      icon: <ShadcnSVG />, circleBg: '#18181b' },
   { name: 'DaisyUI',        icon: <DaisyUISVG />, circleBg: '#1d232a' },
   { name: 'Framer Motion',  icon: <FramerSVG />, circleBg: '#0d0d0d' },
@@ -215,7 +214,6 @@ const backend: Skill[] = [
   { name: 'Better Auth',    icon: <BetterAuthIcon /> },
   { name: 'PostgreSQL',     icon: cdnIcon('postgresql/postgresql-original.svg') },
   { name: 'MongoDB',        icon: cdnIcon('mongodb/mongodb-original.svg') },
-  { name: 'MySQL',          icon: cdnIcon('mysql/mysql-original.svg') },
   { name: 'Firebase',       icon: cdnIcon('firebase/firebase-plain.svg') },
   { name: 'Supabase',       icon: cdnIcon('supabase/supabase-original.svg') },
 ];
@@ -224,7 +222,6 @@ const toolsDevOps: Skill[] = [
   { name: 'Git',            icon: cdnIcon('git/git-original.svg') },
   { name: 'GitHub',         icon: cdnIcon('github/github-original.svg', true) },
   { name: 'VS Code',        icon: cdnIcon('vscode/vscode-original.svg') },
-  { name: 'Cursor',         icon: <CursorSVG /> },
   { name: 'Postman',        icon: cdnIcon('postman/postman-original.svg') },
   { name: 'Figma',          icon: cdnIcon('figma/figma-original.svg') },
   { name: 'Vercel',         icon: <VercelSVG />, circleBg: '#000' },
@@ -232,7 +229,6 @@ const toolsDevOps: Skill[] = [
   { name: 'Cloudflare',     icon: cdnIcon('cloudflare/cloudflare-original.svg') },
   { name: 'Stripe',         icon: <StripeSVG /> },
   { name: 'SSLCommerz',     icon: <SSLCommerzSVG /> },
-  { name: 'npm',            icon: <NpmSVG /> },
 ];
 
 // ── Skill Card ─────────────────────────────────────────────────────────────────
