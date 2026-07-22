@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Emran Hossen | Software Engineer & Full Stack Web Developer",
-  description: "Emran Hossen is a professional Software Engineer & Full Stack Web Developer based in Narsingdi, Dhaka, Bangladesh. Specializing in Next.js, React, Node.js, TypeScript, and scalable web applications.",
+  description: "Emran Hossen is a professional Software Engineer & Full Stack Web Developer from Narsingdi, Dhaka, Bangladesh specializing in React, Next.js & Node.js.",
   keywords: [
     "Emran Hossen",
     "emran work",
