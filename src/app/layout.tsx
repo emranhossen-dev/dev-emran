@@ -48,11 +48,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
       { url: "/favicon.ico" },
-      { url: "/emran-hossen-developer-2026.jpg", type: "image/jpeg", sizes: "32x32" }
     ],
     shortcut: "/favicon.svg",
-    apple: "/emran-hossen-developer-2026.jpg",
+    apple: "/apple-icon.png",
   },
   openGraph: {
     type: "website",
