@@ -18,15 +18,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
-  description: "Emran Hossen is a Full Stack Developer with 3+ years of experience building scalable, high-performance web applications. Explore my projects, skills, and resume — open to full-time opportunities.",
+  title: "Emran Hossen | Software Engineer & Full Stack Web Developer",
+  description: "Emran Hossen ekjon professional Software Engineer & Full Stack Web Developer from Narsingdi, Dhaka, Bangladesh. Specializing in Next.js, React, Node.js, and scalable web apps.",
   keywords: [
     "Emran Hossen",
-    "Full Stack Developer",
-    "Web Developer Portfolio",
-    "React Developer",
-    "Node.js Developer",
-    "Hire Full Stack Developer"
+    "emran work",
+    "emranwork",
+    "emranhossen",
+    "web dev emran",
+    "web developer emran",
+    "web dev emran hossen",
+    "developer emran",
+    "software engineer emran",
+    "software engineer emran hossen",
+    "top 10 software engineer in bangladesh",
+    "Narsingdi web developer",
+    "Narsingdi software engineer",
+    "Narsingdi Emran Hossen",
+    "Dhaka Bangladesh web developer",
+    "Full Stack Developer Bangladesh"
   ],
   authors: [{ name: "Emran Hossen", url: "https://emran.work" }],
   creator: "Emran Hossen",
@@ -37,32 +47,33 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico" },
       { url: "/emran-hossen-developer-2026.jpg", type: "image/jpeg", sizes: "32x32" }
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/favicon.svg",
     apple: "/emran-hossen-developer-2026.jpg",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://emran.work",
-    siteName: "Emran Hossen — Developer Portfolio",
-    title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
-    description: "Full Stack Developer with 3+ years of experience in building modern, scalable web applications. View my portfolio, projects, and get in touch.",
+    siteName: "Emran Hossen — Software Engineer & Web Developer Portfolio",
+    title: "Emran Hossen | Software Engineer & Full Stack Developer | Narsingdi, Bangladesh",
+    description: "Emran Hossen is a professional Software Engineer & Web Developer based in Narsingdi, Dhaka, Bangladesh with 3+ years of experience in building modern, scalable web applications.",
     images: [
       {
         url: "/emran-hossen-developer-2026.jpg",
         width: 1200,
         height: 630,
-        alt: "Emran Hossen - Full Stack Web Developer",
+        alt: "Emran Hossen - Software Engineer & Web Developer from Narsingdi Bangladesh",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Emran Hossen | Full Stack Developer | 3+ Years Experience",
-    description: "Full Stack Developer with 3+ years of experience in building modern, scalable web applications. View my portfolio, projects, and get in touch.",
+    title: "Emran Hossen | Software Engineer & Web Developer | Narsingdi, Bangladesh",
+    description: "Emran Hossen is a professional Software Engineer & Web Developer based in Narsingdi, Dhaka, Bangladesh.",
     images: ["/emran-hossen-developer-2026.jpg"],
     creator: "@emranhossen_dev",
   },
@@ -82,29 +93,48 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD Structured Data for SEO
+// JSON-LD Structured Data for Search Engine & AI Overview Indexing
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Emran Hossen",
+  alternateName: [
+    "emranwork",
+    "emran work",
+    "emranhossen",
+    "web dev emran",
+    "web developer emran",
+    "web dev emran hossen",
+    "developer emran",
+    "software engineer emran",
+    "software engineer emran hossen"
+  ],
   url: "https://emran.work",
   image: "https://emran.work/emran-hossen-developer-2026.jpg",
-  jobTitle: "Full Stack Web Developer",
-  description: "Professional Full Stack Web Developer from Bangladesh specializing in React, Next.js, Node.js, Supabase, PostgreSQL, and MongoDB.",
+  jobTitle: "Software Engineer & Full Stack Web Developer",
+  description: "Emran Hossen is a professional Software Engineer and Full Stack Web Developer from Narsingdi, Dhaka, Bangladesh. Recognized as one of the top software engineers in Bangladesh specializing in React, Next.js, Node.js, and PostgreSQL.",
   email: "dev.emranhossen@gmail.com",
   telephone: "+8801739642983",
   address: {
     "@type": "PostalAddress",
-    addressCountry: "BD",
+    addressLocality: "Narsingdi",
+    addressRegion: "Dhaka",
+    addressCountry: "BD"
+  },
+  homeLocation: {
+    "@type": "Place",
+    name: "Narsingdi, Dhaka, Bangladesh"
   },
   sameAs: [
     "https://github.com/emranhossen-dev",
     "https://twitter.com/emranhossen_dev",
   ],
   knowsAbout: [
+    "Software Engineering",
+    "Full Stack Web Development",
     "React", "Next.js", "Node.js", "TypeScript", "JavaScript",
     "Tailwind CSS", "PostgreSQL", "MongoDB", "Supabase",
-    "Express.js", "REST APIs", "Full Stack Development"
+    "Express.js", "REST APIs"
   ],
   alumniOf: {
     "@type": "EducationalOrganization",
@@ -129,6 +159,7 @@ export default function RootLayout({
     >
       <head>
         <link rel="canonical" href="https://emran.work" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

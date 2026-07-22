@@ -5,18 +5,19 @@ import AboutMe from "@/components/AboutMe";
 import Skills from "@/components/Skills";
 import EducationExperience from "@/components/EducationExperience";
 import Footer from "@/components/Footer";
+import LoadingSpinner, { SectionLoader } from "@/components/LoadingSpinner";
 
 // Dynamically import below-the-fold / interactive client components to defer bundle loading and hydration
 const Projects = dynamic(() => import("@/components/Projects"), {
-  loading: () => <div className="h-96 w-full animate-pulse bg-slate-100/50 dark:bg-zinc-900/50 rounded-2xl border border-slate-200/50 dark:border-zinc-800/50 flex items-center justify-center text-sm font-semibold text-slate-400 dark:text-zinc-500">Loading Projects...</div>
+  loading: () => <SectionLoader text="Loading Projects..." />
 });
 
 const GitHubStats = dynamic(() => import("@/components/GitHubStats"), {
-  loading: () => <div className="h-[120px] w-full animate-pulse bg-slate-100/50 dark:bg-zinc-900/50 rounded-xl border border-slate-200/50 dark:border-zinc-800/50 flex items-center justify-center text-sm font-semibold text-slate-400 dark:text-zinc-500">Loading GitHub Activity...</div>
+  loading: () => <SectionLoader text="Loading GitHub Activity..." />
 });
 
 const Contact = dynamic(() => import("@/components/Contact"), {
-  loading: () => <div className="h-96 w-full animate-pulse bg-slate-100/50 dark:bg-zinc-900/50 rounded-2xl border border-slate-200/50 dark:border-zinc-800/50 flex items-center justify-center text-sm font-semibold text-slate-400 dark:text-zinc-500">Loading Contact...</div>
+  loading: () => <SectionLoader text="Loading Contact..." />
 });
 
 const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
@@ -26,6 +27,7 @@ const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
 export default function Home() {
   return (
     <>
+      <LoadingSpinner />
       <Navbar />
 
       <main className="flex-1 w-full relative">

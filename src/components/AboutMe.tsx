@@ -166,7 +166,7 @@ export default function AboutMe() {
             {/* Bio Paragraph */}
             <div className="space-y-4">
               <p className="text-slate-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
-                Hi, I&apos;m <strong className="text-slate-900 dark:text-white font-bold">Emran Hossen</strong>, a Full Stack Developer specializing in building modern, high-performance web applications with the <strong className="text-slate-800 dark:text-zinc-200">MERN, Next.js, and PostgreSQL/Prisma</strong> stacks.
+                Hi, I&apos;m <strong className="text-slate-900 dark:text-white font-bold">Emran Hossen</strong>, a professional <strong className="text-slate-900 dark:text-white font-bold">Software Engineer & Web Developer</strong> based in <strong className="text-indigo-600 dark:text-indigo-400 font-bold">Narsingdi, Dhaka, Bangladesh</strong>. I specialize in building modern, high-performance web applications with the <strong className="text-slate-800 dark:text-zinc-200">MERN, Next.js, and PostgreSQL/Prisma</strong> stacks.
               </p>
               <p className="text-slate-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
                 I care about clean architecture as much as clean UI, turning ideas into products that are fast, reliable, and genuinely enjoyable to use.
