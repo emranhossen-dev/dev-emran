@@ -24,7 +24,7 @@ const projectsData: Project[] = [
   {
     id: 1,
     name: "Luminous Centre",
-    image: "/project_luminous.png",
+    image: "/project_luminous.webp",
     type: "Learning Management System",
     stack: ["Next.js", "React", "Node.js", "PostgreSQL", "Supabase", "Tailwind CSS"],
     description: "A comprehensive skill development training center platform featuring full course catalogs, online video streaming, interactive quizzes, grading models, automated certificate generation, and a management panel for instructors and admins.",
@@ -36,7 +36,7 @@ const projectsData: Project[] = [
   {
     id: 2,
     name: "IronLocker",
-    image: "/project_ironlocker.png",
+    image: "/project_ironlocker.webp",
     type: "Secure Personal Vault",
     stack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Web Crypto API"],
     description: "A secure personal vault where users can store passwords, photos, notes, text, and videos — like a personal drive. No Gmail login or code required. Features strong client-side encryption and an intuitive file management interface.",
@@ -49,7 +49,7 @@ const projectsData: Project[] = [
   {
     id: 3,
     name: "YazMart",
-    image: "/project_yazmart.png",
+    image: "/project_yazmart.webp",
     type: "E-Commerce Platform",
     stack: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS", "Stripe"],
     description: "A full-featured e-commerce marketplace with product catalogs, shopping cart, secure checkout, order tracking, and admin inventory management. Built for a seamless and modern online shopping experience.",
@@ -61,7 +61,7 @@ const projectsData: Project[] = [
   {
     id: 4,
     name: "Symphony Softech Ltd",
-    image: "/project_symphony.png",
+    image: "/project_symphony.webp",
     type: "Corporate Website",
     stack: ["React", "Next.js", "Tailwind CSS", "Node.js"],
     description: "Official website for Symphony Softech Limited, a software company. Features a modern corporate design with service showcases, team sections, portfolio displays, and contact functionality. Built with performance and SEO optimization in mind.",
@@ -73,7 +73,7 @@ const projectsData: Project[] = [
   {
     id: 5,
     name: "GadgetBro",
-    image: "/project_gadgetbro.png",
+    image: "/project_gadgetbro.webp",
     type: "Gadget E-Commerce",
     stack: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
     description: "An e-commerce platform specifically designed for gadget and electronics items. Features product comparison, detailed spec sheets, user reviews, and a streamlined purchasing flow. Currently under active development.",
@@ -86,7 +86,7 @@ const projectsData: Project[] = [
   {
     id: 6,
     name: "Food For Health",
-    image: "/project_foodforhealth.png",
+    image: "/project_foodforhealth.webp",
     type: "Organic E-Commerce",
     stack: ["React", "Next.js", "Node.js", "MongoDB", "Tailwind CSS"],
     description: "An organic food and health products e-commerce platform dedicated to selling quality organic items. Features product categories, nutritional information displays, subscription boxes, and health-conscious shopping guides.",
@@ -99,7 +99,7 @@ const projectsData: Project[] = [
   {
     id: 7,
     name: "Module Maker",
-    image: "/project_modulemaker.png",
+    image: "/project_modulemaker.webp",
     type: "EdTech Tool",
     stack: ["React", "Next.js", "Node.js", "Supabase", "Tailwind CSS"],
     description: "A specialized tool for educational institutes to create course modules and curriculum structures efficiently. Supports bulk uploading of module content, curriculum organization, and eliminates the hassle of manual module creation.",

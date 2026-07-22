@@ -34,7 +34,7 @@ export default function LoadingSpinner() {
         <div className="absolute w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-white/20 bg-zinc-900 shadow-2xl p-0.5">
           <div className="relative w-full h-full rounded-full overflow-hidden">
             <Image
-              src="/emran-hossen-developer-2026.jpg"
+              src="/emran-hossen-developer-2026.webp"
               alt="Emran Hossen Portfolio Loader"
               fill
               sizes="96px"
@@ -71,7 +71,7 @@ export function SectionLoader({ text = "Loading..." }: { text?: string }) {
         {/* Profile Avatar */}
         <div className="absolute w-12 h-12 rounded-full overflow-hidden border border-white/30 bg-zinc-900 shadow-md">
           <Image
-            src="/emran-hossen-developer-2026.jpg"
+            src="/emran-hossen-developer-2026.webp"
             alt="Loading..."
             fill
             sizes="48px"

@@ -117,7 +117,7 @@ export default function AboutMe() {
                 {/* Profile Photo */}
                 <div className="relative w-24 h-24 rounded-full overflow-hidden ring-4 ring-indigo-500/10 dark:ring-indigo-500/15 border-2 border-white dark:border-zinc-900 shadow-lg">
                   <Image
-                    src="/emran-hossen-developer-2026.jpg"
+                    src="/emran-hossen-developer-2026.webp"
                     alt="Emran Hossen - Full Stack Developer Profile"
                     fill
                     sizes="96px"

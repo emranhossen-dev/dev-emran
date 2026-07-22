@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     description: "Emran Hossen is a professional Software Engineer & Web Developer based in Narsingdi, Dhaka, Bangladesh with 3+ years of experience in building modern, scalable web applications.",
     images: [
       {
-        url: "/emran-hossen-developer-2026.jpg",
+        url: "/emran-hossen-developer-2026.webp",
         width: 1200,
         height: 630,
         alt: "Emran Hossen - Software Engineer & Web Developer from Narsingdi Bangladesh",
@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Emran Hossen | Software Engineer & Web Developer | Narsingdi, Bangladesh",
     description: "Emran Hossen is a professional Software Engineer & Web Developer based in Narsingdi, Dhaka, Bangladesh.",
-    images: ["/emran-hossen-developer-2026.jpg"],
+    images: ["/emran-hossen-developer-2026.webp"],
     creator: "@emranhossen_dev",
   },
   robots: {
@@ -155,7 +155,7 @@ const jsonLd = {
     "top 10 web developer in bangladesh"
   ],
   url: "https://emran.work",
-  image: "https://emran.work/emran-hossen-developer-2026.jpg",
+  image: "https://emran.work/emran-hossen-developer-2026.webp",
   jobTitle: "Software Engineer & Full Stack Web Developer",
   description: "Emran Hossen is a professional Software Engineer and Full Stack Web Developer from Narsingdi, Dhaka, Bangladesh. Recognized as one of the top software engineers in Bangladesh specializing in React, Next.js, Node.js, and PostgreSQL.",
   email: "dev.emranhossen@gmail.com",
