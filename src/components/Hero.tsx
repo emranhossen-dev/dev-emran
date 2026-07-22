@@ -13,50 +13,47 @@ const titles = [
 ];
 
 export default function Hero() {
+  const [displayText, setDisplayText] = useState('');
   const [titleIndex, setTitleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState(titles[0]);
-  const [isDeleting, setIsDeleting] = useState(true);
-  const [typingSpeed, setTypingSpeed] = useState(2000);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
+    const currentTitle = titles[titleIndex];
+
     const handleTyping = () => {
-      const fullText = titles[titleIndex];
       if (!isDeleting) {
-        setDisplayText(fullText.substring(0, displayText.length + 1));
-        setTypingSpeed(80);
-        if (displayText === fullText) {
-          setTypingSpeed(1800);
-          setIsDeleting(true);
+        setDisplayText(currentTitle.substring(0, displayText.length + 1));
+        if (displayText.length === currentTitle.length) {
+          setTimeout(() => setIsDeleting(true), 2000);
         }
       } else {
-        setDisplayText(fullText.substring(0, displayText.length - 1));
-        setTypingSpeed(45);
-        if (displayText === '') {
+        setDisplayText(currentTitle.substring(0, displayText.length - 1));
+        if (displayText.length === 0) {
           setIsDeleting(false);
           setTitleIndex((prev) => (prev + 1) % titles.length);
         }
       }
     };
-    const timer = setTimeout(handleTyping, typingSpeed);
+
+    const timer = setTimeout(handleTyping, isDeleting ? 40 : 80);
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, titleIndex, typingSpeed]);
+  }, [displayText, isDeleting, titleIndex]);
 
   const handlePrintResume = () => {
     window.print();
   };
 
-  const handleScrollToProjects = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const target = document.querySelector('#projects');
-    if (target) {
-      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+  const handleScrollToProjects = () => {
+    const el = document.getElementById('projects');
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+    <section id="home" className="min-h-screen pt-28 pb-16 flex items-center justify-center relative overflow-hidden">
       {/* Background glow animations */}
       <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] rounded-full bg-indigo-500/10 dark:bg-indigo-500/5 blur-[80px] animate-pulse-glow" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-pink-500/10 dark:bg-pink-500/4 blur-[100px] animate-pulse-glow" style={{ animationDelay: '3s' }} />
@@ -127,7 +124,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Photo Column — Circular with Glow, No Zoom */}
+        {/* Right Photo Column — Circular with Glow & Official Tech Badges */}
         <div className="lg:col-span-5 flex justify-center items-center">
           <div className="relative group">
             {/* Animated glow ring behind photo */}
@@ -146,15 +143,41 @@ export default function Hero() {
               />
             </div>
 
-            {/* Floating tech badges */}
-            <div className="absolute -top-2 -right-2 bg-white/80 dark:bg-zinc-900/80 border border-slate-200/50 dark:border-zinc-800/50 p-2.5 rounded-xl shadow-lg backdrop-blur-md animate-float" style={{ animationDelay: '1s' }}>
-              <span className="text-xl">⚛️</span>
+            {/* Floating brand-colored tech badge chips */}
+            {/* Top-right: Next.js + React */}
+            <div className="absolute -top-4 -right-4 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex items-center gap-1.5" style={{ animationDelay: '1s' }}>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#000', color: '#fff' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" width={16} height={16} />
+                Next.js
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#20232A', color: '#61DAFB' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" width={16} height={16} />
+                React
+              </span>
             </div>
-            <div className="absolute -bottom-2 -left-2 bg-white/80 dark:bg-zinc-900/80 border border-slate-200/50 dark:border-zinc-800/50 p-2.5 rounded-xl shadow-lg backdrop-blur-md animate-float" style={{ animationDelay: '2.5s' }}>
-              <span className="text-xl">🚀</span>
+
+            {/* Bottom-left: Node.js + Firebase */}
+            <div className="absolute -bottom-4 -left-4 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex items-center gap-1.5" style={{ animationDelay: '2.5s' }}>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#339933', color: '#fff' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" width={16} height={16} />
+                Node.js
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#FFCA28', color: '#000' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="Firebase" width={16} height={16} />
+                Firebase
+              </span>
             </div>
-            <div className="absolute top-1/2 -right-6 bg-white/80 dark:bg-zinc-900/80 border border-slate-200/50 dark:border-zinc-800/50 p-2.5 rounded-xl shadow-lg backdrop-blur-md animate-float" style={{ animationDelay: '4s' }}>
-              <span className="text-xl">💻</span>
+
+            {/* Mid-right: Tailwind + JS */}
+            <div className="absolute top-1/2 -right-6 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex flex-col gap-1.5" style={{ animationDelay: '4s' }}>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#0EA5E9', color: '#fff' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" width={16} height={16} />
+                Tailwind
+              </span>
+              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#F7DF1E', color: '#000' }}>
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width={16} height={16} />
+                JavaScript
+              </span>
             </div>
           </div>
         </div>
