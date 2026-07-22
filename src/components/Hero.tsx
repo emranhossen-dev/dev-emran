@@ -143,42 +143,35 @@ export default function Hero() {
               />
             </div>
 
-            {/* Floating brand-colored tech badge chips */}
-            {/* Top-right: Next.js + React */}
-            <div className="absolute -top-4 -right-4 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex items-center gap-1.5" style={{ animationDelay: '1s' }}>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#000', color: '#fff' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" width={16} height={16} />
-                Next.js
-              </span>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#20232A', color: '#61DAFB' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" width={16} height={16} />
-                React
-              </span>
+            {/* 3 single-icon floating badges — positioned outside the circle, never overlapping photo */}
+
+            {/* Next.js — top right, pushed well outside the circle */}
+            <div
+              className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
+              style={{ top: '-2.5rem', right: '-3.5rem', animationDelay: '0.5s' }}
+            >
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" width={20} height={20} />
+              <span className="text-[11px] font-bold text-white uppercase tracking-wide">Next.js</span>
             </div>
 
-            {/* Bottom-left: Node.js + Firebase */}
-            <div className="absolute -bottom-4 -left-4 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex items-center gap-1.5" style={{ animationDelay: '2.5s' }}>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#339933', color: '#fff' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" width={16} height={16} />
-                Node.js
-              </span>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#FFCA28', color: '#000' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg" alt="Firebase" width={16} height={16} />
-                Firebase
-              </span>
+            {/* React — bottom left, pushed well outside the circle */}
+            <div
+              className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
+              style={{ bottom: '-2.5rem', left: '-3.5rem', animationDelay: '2s' }}
+            >
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" width={20} height={20} />
+              <span className="text-[11px] font-bold" style={{ color: '#61DAFB' }}>React</span>
             </div>
 
-            {/* Mid-right: Tailwind + JS */}
-            <div className="absolute top-1/2 -right-6 glass-card p-2.5 rounded-2xl border border-white/15 shadow-xl backdrop-blur-xl animate-float flex flex-col gap-1.5" style={{ animationDelay: '4s' }}>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#0EA5E9', color: '#fff' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind" width={16} height={16} />
-                Tailwind
-              </span>
-              <span className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wide" style={{ background: '#F7DF1E', color: '#000' }}>
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width={16} height={16} />
-                JavaScript
-              </span>
+            {/* JavaScript — mid right, pushed well outside the circle */}
+            <div
+              className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
+              style={{ top: '50%', right: '-4rem', transform: 'translateY(-50%)', animationDelay: '3.5s' }}
+            >
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width={20} height={20} />
+              <span className="text-[11px] font-bold" style={{ color: '#F7DF1E' }}>JS</span>
             </div>
+
           </div>
         </div>
       </div>

@@ -1,72 +1,87 @@
 'use client';
 
 import React from 'react';
-import { Code2, Server, Wrench } from 'lucide-react';
-import {
-  NextjsIcon, ReactIcon, TypescriptIcon, JavascriptIcon, TailwindIcon,
-  ReduxIcon, Html5Icon, Css3Icon, NodejsIcon, ExpressIcon, PostgresIcon,
-  MongodbIcon, PrismaIcon, FirebaseIcon, SupabaseIcon, StripeIcon,
-  GitIcon, GithubIcon, FigmaIcon, PostmanIcon, VscodeIcon, LinuxIcon,
-  AwsIcon, NginxIcon, ZustandIcon, VercelIcon, TanstackIcon, ShadcnUiIcon,
-} from './TechIcons';
+import { Code2, Server, Briefcase } from 'lucide-react';
+
+const CDN = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
 
 interface Skill {
   name: string;
-  icon: React.ReactNode;
-  bg: string;     // badge background color
-  text: string;   // badge text color
+  icon: string;           // CDN URL
+  invert?: boolean;       // brighten dark icons (Express, Prisma, etc.)
+  bg?: string;            // optional coloured circle bg
 }
 
+// ── Skill Data ───────────────────────────────────────────────────────────────
+
 const frontend: Skill[] = [
-  { name: 'Next.js',       icon: <NextjsIcon size={20} />,       bg: '#000000', text: '#fff' },
-  { name: 'React',         icon: <ReactIcon size={20} />,        bg: '#20232A', text: '#61DAFB' },
-  { name: 'TypeScript',    icon: <TypescriptIcon size={20} />,   bg: '#3178C6', text: '#fff' },
-  { name: 'JavaScript',    icon: <JavascriptIcon size={20} />,   bg: '#F7DF1E', text: '#000' },
-  { name: 'TailwindCSS',   icon: <TailwindIcon size={20} />,     bg: '#0EA5E9', text: '#fff' },
-  { name: 'Redux',         icon: <ReduxIcon size={20} />,        bg: '#764ABC', text: '#fff' },
-  { name: 'HTML5',         icon: <Html5Icon size={20} />,        bg: '#E34F26', text: '#fff' },
-  { name: 'CSS3',          icon: <Css3Icon size={20} />,         bg: '#1572B6', text: '#fff' },
-  { name: 'Zustand',       icon: <ZustandIcon size={18} />,      bg: '#FF8C00', text: '#fff' },
-  { name: 'shadcn/ui',     icon: <ShadcnUiIcon size={18} />,     bg: '#18181b', text: '#fff' },
-  { name: 'TanStack Query',icon: <TanstackIcon size={18} />,     bg: '#EF4444', text: '#fff' },
+  { name: 'JavaScript',    icon: `${CDN}/javascript/javascript-original.svg` },
+  { name: 'TypeScript',    icon: `${CDN}/typescript/typescript-original.svg` },
+  { name: 'React.js',      icon: `${CDN}/react/react-original.svg` },
+  { name: 'Next.js',       icon: `${CDN}/nextjs/nextjs-original.svg`, bg: '#fff' },
+  { name: 'Tailwind CSS',  icon: `${CDN}/tailwindcss/tailwindcss-original.svg` },
+  { name: 'HTML5',         icon: `${CDN}/html5/html5-original.svg` },
+  { name: 'CSS3',          icon: `${CDN}/css3/css3-original.svg` },
+  { name: 'Redux',         icon: `${CDN}/redux/redux-original.svg` },
+  { name: 'Zustand',       icon: `${CDN}/zustand/zustand-original.svg` },
 ];
 
 const backend: Skill[] = [
-  { name: 'Node.js',       icon: <NodejsIcon size={20} />,       bg: '#339933', text: '#fff' },
-  { name: 'Express.js',    icon: <ExpressIcon size={20} />,      bg: '#404040', text: '#fff' },
-  { name: 'PostgreSQL',    icon: <PostgresIcon size={20} />,     bg: '#336791', text: '#fff' },
-  { name: 'Prisma',        icon: <PrismaIcon size={20} />,       bg: '#2D3748', text: '#fff' },
-  { name: 'MongoDB',       icon: <MongodbIcon size={20} />,      bg: '#47A248', text: '#fff' },
-  { name: 'Firebase',      icon: <FirebaseIcon size={20} />,     bg: '#FFCA28', text: '#000' },
-  { name: 'Supabase',      icon: <SupabaseIcon size={20} />,     bg: '#3ECF8E', text: '#000' },
-  { name: 'Stripe',        icon: <StripeIcon size={20} />,       bg: '#6772E5', text: '#fff' },
+  { name: 'Node.js',      icon: `${CDN}/nodejs/nodejs-original.svg` },
+  { name: 'Express.js',   icon: `${CDN}/express/express-original.svg`, invert: true },
+  { name: 'MongoDB',      icon: `${CDN}/mongodb/mongodb-original.svg` },
+  { name: 'PostgreSQL',   icon: `${CDN}/postgresql/postgresql-original.svg` },
+  { name: 'Firebase',     icon: `${CDN}/firebase/firebase-plain.svg` },
+  { name: 'Supabase',     icon: `${CDN}/supabase/supabase-original.svg` },
+  { name: 'Prisma',       icon: `${CDN}/prisma/prisma-original.svg`, invert: true },
+  { name: 'MySQL',        icon: `${CDN}/mysql/mysql-original.svg` },
+  { name: 'REST API',     icon: `${CDN}/postman/postman-original.svg` },
 ];
 
-const tools: Skill[] = [
-  { name: 'Git',           icon: <GitIcon size={20} />,          bg: '#F05032', text: '#fff' },
-  { name: 'GitHub',        icon: <GithubIcon size={20} />,       bg: '#24292E', text: '#fff' },
-  { name: 'Vercel',        icon: <VercelIcon size={20} />,       bg: '#000000', text: '#fff' },
-  { name: 'VS Code',       icon: <VscodeIcon size={20} />,       bg: '#007ACC', text: '#fff' },
-  { name: 'Figma',         icon: <FigmaIcon size={20} />,        bg: '#F24E1E', text: '#fff' },
-  { name: 'Postman',       icon: <PostmanIcon size={20} />,      bg: '#FF6C37', text: '#fff' },
-  { name: 'Linux',         icon: <LinuxIcon size={20} />,        bg: '#FCC624', text: '#000' },
-  { name: 'AWS',           icon: <AwsIcon size={20} />,          bg: '#232F3E', text: '#FF9900' },
-  { name: 'Nginx',         icon: <NginxIcon size={20} />,        bg: '#009639', text: '#fff' },
+const toolsDevOps: Skill[] = [
+  { name: 'Git',          icon: `${CDN}/git/git-original.svg` },
+  { name: 'GitHub',       icon: `${CDN}/github/github-original.svg`, invert: true },
+  { name: 'VS Code',      icon: `${CDN}/vscode/vscode-original.svg` },
+  { name: 'Figma',        icon: `${CDN}/figma/figma-original.svg` },
+  { name: 'Postman',      icon: `${CDN}/postman/postman-original.svg` },
+  { name: 'Linux',        icon: `${CDN}/linux/linux-original.svg` },
+  { name: 'Nginx',        icon: `${CDN}/nginx/nginx-original.svg` },
+  { name: 'AWS',          icon: `${CDN}/amazonwebservices/amazonwebservices-original-wordmark.svg`, invert: true },
+  { name: 'Vercel',       icon: `${CDN}/vercel/vercel-original.svg`, invert: true },
 ];
 
-function SkillBadge({ skill }: { skill: Skill }) {
+// ── Skill Card ───────────────────────────────────────────────────────────────
+
+function SkillCard({ skill }: { skill: Skill }) {
   return (
-    <div
-      className="flex items-center gap-2 px-3.5 py-2 rounded-lg font-bold text-xs uppercase tracking-widest select-none"
-      style={{ background: skill.bg, color: skill.text }}
-    >
-      <span className="flex-shrink-0 flex items-center justify-center">
-        {skill.icon}
+    <div className="flex flex-col items-center gap-2 group">
+      {/* Round icon circle */}
+      <div
+        className="w-14 h-14 rounded-full flex items-center justify-center border border-white/15 transition-border duration-300"
+        style={{
+          background: skill.bg ?? 'rgba(255,255,255,0.07)',
+          backdropFilter: 'blur(10px)',
+        }}
+      >
+        <img
+          src={skill.icon}
+          alt={skill.name}
+          width={30}
+          height={30}
+          loading="lazy"
+          className={skill.invert ? 'brightness-0 invert' : ''}
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+      {/* Skill name */}
+      <span className="text-[11px] font-semibold text-slate-300 text-center leading-tight">
+        {skill.name}
       </span>
-      <span>{skill.name}</span>
     </div>
   );
 }
+
+// ── Category Block ────────────────────────────────────────────────────────────
 
 interface CategoryProps {
   title: string;
@@ -76,19 +91,24 @@ interface CategoryProps {
 
 function SkillCategory({ title, icon, skills }: CategoryProps) {
   return (
-    <div className="space-y-4">
+    <div className="glass-card rounded-2xl p-6 flex flex-col gap-5">
+      {/* Header */}
       <div className="flex items-center gap-2">
         <span className="text-indigo-400">{icon}</span>
-        <h3 className="text-lg font-bold text-white">{title}</h3>
+        <h3 className="text-base font-bold text-white tracking-wide">{title}</h3>
       </div>
-      <div className="flex flex-wrap gap-2.5">
+
+      {/* Icon Grid */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-5">
         {skills.map((skill) => (
-          <SkillBadge key={skill.name} skill={skill} />
+          <SkillCard key={skill.name} skill={skill} />
         ))}
       </div>
     </div>
   );
 }
+
+// ── Section ───────────────────────────────────────────────────────────────────
 
 export default function Skills() {
   return (
@@ -100,7 +120,7 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full glass-pill text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
             Tech Stack
           </span>
@@ -112,24 +132,22 @@ export default function Skills() {
           </p>
         </div>
 
-        {/* Skills — Badge Layout */}
-        <div className="glass-card rounded-2xl p-8 space-y-10">
+        {/* 3-Column Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <SkillCategory
             title="Frontend"
             icon={<Code2 className="w-5 h-5" />}
             skills={frontend}
           />
-          <div className="h-px bg-white/8" />
           <SkillCategory
-            title="Backend &amp; Database"
+            title="Backend & Database"
             icon={<Server className="w-5 h-5" />}
             skills={backend}
           />
-          <div className="h-px bg-white/8" />
           <SkillCategory
-            title="Tools &amp; Platforms"
-            icon={<Wrench className="w-5 h-5" />}
-            skills={tools}
+            title="Tools & DevOps"
+            icon={<Briefcase className="w-5 h-5" />}
+            skills={toolsDevOps}
           />
         </div>
 
