@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ExternalLink, X, ShieldAlert, Rocket, Code, Globe, Lock, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, X, ShieldAlert, Rocket, Code, Globe, Lock, ChevronDown } from 'lucide-react';
 import { GithubIcon } from './BrandIcons';
 
 interface Project {
@@ -110,27 +110,13 @@ const projectsData: Project[] = [
   }
 ];
 
-const ITEMS_PER_PAGE = 3;
+const INITIAL_PROJECT_COUNT = 3;
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
-  const totalPages = Math.ceil(projectsData.length / ITEMS_PER_PAGE);
-  const paginatedProjects = projectsData.slice(
-    currentPage * ITEMS_PER_PAGE,
-    (currentPage + 1) * ITEMS_PER_PAGE
-  );
-
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
-    // Scroll to projects section top
-    const el = document.getElementById('projects');
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 100;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
+  const visibleProjects = showAll ? projectsData : projectsData.slice(0, INITIAL_PROJECT_COUNT);
 
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
@@ -153,9 +139,9 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Project Cards Grid — 3 per page */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {paginatedProjects.map((project) => (
+        {/* Project Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {visibleProjects.map((project) => (
             <div
               key={project.id}
               className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white/50 dark:bg-zinc-900/50 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm hover:border-indigo-300/40 dark:hover:border-indigo-700/40 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-500"
@@ -215,39 +201,24 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-3">
+        {/* View More / Show Less Toggle Button */}
+        {projectsData.length > INITIAL_PROJECT_COUNT && (
+          <div className="flex items-center justify-center mt-10">
             <button
-              onClick={() => goToPage(currentPage - 1)}
-              disabled={currentPage === 0}
-              className="p-2.5 rounded-xl border border-slate-200/60 dark:border-zinc-800/60 text-slate-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-              aria-label="Previous page"
+              onClick={() => {
+                setShowAll(!showAll);
+                if (showAll) {
+                  const el = document.getElementById('projects');
+                  if (el) {
+                    const top = el.getBoundingClientRect().top + window.scrollY - 100;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                  }
+                }
+              }}
+              className="px-8 py-3.5 rounded-xl glass-card border border-white/20 font-bold text-white text-sm hover:border-indigo-400/60 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer group"
             >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => goToPage(i)}
-                className={`w-10 h-10 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
-                  currentPage === i
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 dark:bg-indigo-500'
-                    : 'border border-slate-200/60 dark:border-zinc-800/60 text-slate-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-700'
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-
-            <button
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages - 1}
-              className="p-2.5 rounded-xl border border-slate-200/60 dark:border-zinc-800/60 text-slate-500 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
-              aria-label="Next page"
-            >
-              <ChevronRight className="w-5 h-5" />
+              <span>{showAll ? 'Show Less Projects' : 'View More Projects'}</span>
+              <ChevronDown className={`w-4 h-4 text-indigo-400 group-hover:text-white transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
             </button>
           </div>
         )}
