@@ -112,14 +112,14 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full sm:w-auto">
             <button
               onClick={() => setIsResumeOpen(true)}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-indigo-600/25 dark:bg-indigo-500 dark:hover:bg-indigo-600 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-indigo-600/25 dark:bg-indigo-500 dark:hover:bg-indigo-600 hover:border-cyan-400 hover:shadow-cyan-500/50 transition-all duration-300 cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               View &amp; Download Resume
             </button>
             <button
               onClick={handleScrollToProjects}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 text-slate-700 dark:text-zinc-300 font-semibold px-8 py-3.5 rounded-xl border border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-900/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 text-slate-700 dark:text-zinc-300 font-semibold px-8 py-3.5 rounded-xl border border-white/20 hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300 cursor-pointer"
             >
               See My Projects
               <ArrowRight className="w-4 h-4" />

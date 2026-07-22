@@ -6,17 +6,8 @@
 }
 
 :root {
-  --background-base: #f8fafc;
-  --foreground-base: #0f172a;
-  --glass-bg: rgba(255, 255, 255, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --card-bg: rgba(255, 255, 255, 0.55);
-  --accent-glow: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(168, 85, 247, 0.04) 70%, transparent 100%);
-  --text-muted: #475569;
-  --border-color: rgba(15, 23, 42, 0.06);
-  --nav-bg: rgba(255, 255, 255, 0.6);
-  --primary-color: #4f46e5;
-  --primary-hover: #4338ca;
+  --background-base: #070d1e;
+  --foreground-base: #f8fafc;
 }
 
 .dark {
@@ -47,36 +38,42 @@ html, body {
   transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Glassmorphism utility classes */
+/* Simple & Elegant Glassmorphism Utility Classes (Zero Glow / Zero Hover Animation) */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .glass-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease, background-color 0.3s ease;
+  background: var(--card-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 .glass-card:hover {
-  transform: translateY(-6px);
-  background: rgba(25, 45, 95, 0.55);
-  box-shadow: 0 22px 50px -10px rgba(124, 58, 237, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
-  border-color: rgba(165, 180, 252, 0.45);
+  transform: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+  border-color: var(--glass-border) !important;
+  background: var(--card-bg) !important;
 }
 
 .glass-pill {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+.glass-pill:hover {
+  transform: none !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
 }
 
 /* Keyframe Animations */
@@ -93,8 +90,8 @@ html, body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.08); }
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.1); }
 }
 
 @keyframes blink {
@@ -119,13 +116,13 @@ html, body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f43f5e 100%);
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-blue {
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -156,16 +153,16 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background-base);
+  background: #050914;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 /* Print layout optimizations for Resume download */
@@ -198,4 +195,3 @@ html, body {
     color: black !important;
   }
 }
-

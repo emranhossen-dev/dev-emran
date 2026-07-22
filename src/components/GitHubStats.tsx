@@ -50,12 +50,9 @@ function parseContributions(contributions: ApiContribution[]): { weeks: WeekData
   const weeks: WeekData[] = [];
   let currentWeek: DayData[] = [];
 
-  // The API returns days in order, starting from a Sunday
-  // First entry's day-of-week tells us if we need padding
   const firstDate = new Date(contributions[0].date + 'T00:00:00');
-  const firstDayOfWeek = firstDate.getDay(); // 0=Sun
+  const firstDayOfWeek = firstDate.getDay();
 
-  // Pad the first week if it doesn't start on Sunday
   for (let i = 0; i < firstDayOfWeek; i++) {
     currentWeek.push({ date: '', count: 0, level: 0 });
   }
@@ -74,7 +71,6 @@ function parseContributions(contributions: ApiContribution[]): { weeks: WeekData
     }
   }
 
-  // Push remaining partial week
   if (currentWeek.length > 0) {
     while (currentWeek.length < 7) {
       currentWeek.push({ date: '', count: 0, level: 0 });
@@ -138,7 +134,6 @@ export default function GitHubStats() {
 
   const monthLabels = weeks.length > 0 ? getMonthLabels(weeks) : [];
 
-  // Calculate dimensions — full width responsive
   const CELL_SIZE = 11;
   const CELL_GAP = 3;
   const LABEL_WIDTH = 34;
@@ -149,19 +144,17 @@ export default function GitHubStats() {
 
   return (
     <section id="github" className="py-24 relative overflow-hidden">
-      <div className="absolute top-1/4 left-10 w-[350px] h-[350px] rounded-full bg-emerald-500/5 dark:bg-emerald-500/3 blur-[90px] animate-pulse-glow" />
-
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/50 dark:border-indigo-800/30 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full glass-pill text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
             Open Source
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
             GitHub <span className="text-gradient">Activity</span>
           </h2>
-          <p className="mt-4 text-slate-500 dark:text-zinc-400 text-sm sm:text-base max-w-lg mx-auto">
+          <p className="mt-4 text-slate-400 text-sm sm:text-base max-w-lg mx-auto">
             My real-time contribution history — shipping code consistently.
           </p>
         </div>
@@ -172,18 +165,18 @@ export default function GitHubStats() {
             href={`https://github.com/${GITHUB_USERNAME}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm hover:border-indigo-300/50 dark:hover:border-indigo-700/50 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-xl glass-card transition-all duration-300 group"
           >
-            <GithubIcon className="w-6 h-6 text-slate-700 dark:text-zinc-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
+            <GithubIcon className="w-6 h-6 text-slate-200 group-hover:text-indigo-400 transition-colors" />
             <div className="text-left">
-              <p className="text-sm font-bold text-slate-900 dark:text-white">@{GITHUB_USERNAME}</p>
-              <p className="text-[11px] text-slate-600 dark:text-zinc-400">View Full Profile →</p>
+              <p className="text-sm font-bold text-white">@{GITHUB_USERNAME}</p>
+              <p className="text-[11px] text-slate-400">View Full Profile →</p>
             </div>
           </a>
         </div>
 
         {/* Contribution Graph — Full Width Glassmorphic Style */}
-        <div className="w-full p-6 sm:p-8 rounded-2xl glass-card border border-white/15 shadow-2xl backdrop-blur-2xl">
+        <div className="w-full p-6 sm:p-8 rounded-2xl glass-card">
 
           {/* Title */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">

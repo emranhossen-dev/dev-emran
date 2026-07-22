@@ -57,28 +57,28 @@ export default function Contact() {
               {/* Email Card */}
               <a
                 href="mailto:dev.emranhossen@gmail.com"
-                className="p-5 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm flex items-center gap-4 group hover:border-indigo-300/40 dark:hover:border-indigo-700/40 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300"
+                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
               >
-                <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-xl glass-pill text-indigo-400">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Email Me</p>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">dev.emranhossen@gmail.com</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send an Email</p>
+                  <p className="text-sm font-semibold text-white mt-0.5">dev.emranhossen@gmail.com</p>
                 </div>
               </a>
 
               {/* Call Card */}
               <a
                 href="tel:+8801739642983"
-                className="p-5 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm flex items-center gap-4 group hover:border-indigo-300/40 dark:hover:border-indigo-700/40 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300"
+                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
               >
-                <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-xl glass-pill text-indigo-400">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Call Directly</p>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">+880 1739-642983</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Call Directly</p>
+                  <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
                 </div>
               </a>
 
@@ -87,14 +87,14 @@ export default function Contact() {
                 href="https://wa.me/8801739642983?text=Hello%20Emran,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-5 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200/60 dark:border-zinc-800/60 backdrop-blur-sm flex items-center gap-4 group hover:border-indigo-300/40 dark:hover:border-indigo-700/40 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300"
+                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
               >
-                <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-xl glass-pill text-indigo-400">
                   <MessageSquare className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-600 dark:text-zinc-400 uppercase">Send WhatsApp</p>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-0.5">+880 1739-642983</p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send WhatsApp</p>
+                  <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
                 </div>
               </a>
 
@@ -103,8 +103,8 @@ export default function Contact() {
 
           {/* Right Column - Contact Form */}
           <div className="lg:col-span-7">
-            <div className="glass-card p-8 rounded-2xl border border-slate-200/50 dark:border-zinc-800/80">
-              <h4 className="text-lg font-bold text-slate-950 dark:text-white mb-6">Send an Inquiry</h4>
+            <div className="glass-card p-8 rounded-2xl">
+              <h4 className="text-lg font-bold text-white mb-6">Send an Inquiry</h4>
               
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>

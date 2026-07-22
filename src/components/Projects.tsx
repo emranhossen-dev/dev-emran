@@ -215,7 +215,7 @@ export default function Projects() {
                   }
                 }
               }}
-              className="px-8 py-3.5 rounded-xl glass-card border border-white/20 font-bold text-white text-sm hover:border-indigo-400/60 hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer group"
+              className="px-8 py-3.5 rounded-xl glass-card border border-white/20 font-bold text-white text-sm hover:border-cyan-400 hover:shadow-[0_0_25px_rgba(56,189,248,0.5)] transition-all duration-300 flex items-center gap-2.5 cursor-pointer group"
             >
               <span>{showAll ? 'Show Less Projects' : 'View More Projects'}</span>
               <ChevronDown className={`w-4 h-4 text-indigo-400 group-hover:text-white transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`} />
