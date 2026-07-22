@@ -5,6 +5,7 @@ import AboutMe from "@/components/AboutMe";
 import Skills from "@/components/Skills";
 import EducationExperience from "@/components/EducationExperience";
 import Footer from "@/components/Footer";
+import SpaceBackground from "@/components/SpaceBackground";
 import LoadingSpinner, { SectionLoader } from "@/components/LoadingSpinner";
 
 // Dynamically import below-the-fold / interactive client components to defer bundle loading and hydration
@@ -27,10 +28,11 @@ const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
 export default function Home() {
   return (
     <>
+      <SpaceBackground />
       <LoadingSpinner />
       <Navbar />
 
-      <main className="flex-1 w-full relative">
+      <main className="flex-1 w-full relative z-10">
         <Hero />
         <AboutMe />
         <Skills />
