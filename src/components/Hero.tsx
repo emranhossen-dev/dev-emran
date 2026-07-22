@@ -85,7 +85,7 @@ export default function Hero() {
           </div>
 
           <p className="max-w-xl text-base sm:text-lg text-slate-600 dark:text-zinc-400 leading-relaxed">
-            I craft high-performance, responsive web applications with flawless user experiences. Specializing in modern React architecture, full-stack Node.js environments, and cloud infrastructure like Supabase. Let&apos;s turn your concept into functional, clean code.
+            Professional <strong className="text-slate-900 dark:text-white font-bold">Software Engineer &amp; Full Stack Web Developer</strong> based in <strong className="text-indigo-600 dark:text-indigo-400 font-bold">Narsingdi, Dhaka, Bangladesh</strong>. I craft high-performance, responsive web applications with flawless user experiences. Specializing in modern React architecture, Next.js, full-stack Node.js environments, and PostgreSQL. Let&apos;s turn your concept into functional, clean code.
           </p>
 
           {/* Social Links */}
