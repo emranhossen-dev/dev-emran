@@ -5,13 +5,13 @@ import { GithubIcon } from './BrandIcons';
 
 const GITHUB_USERNAME = 'emranhossen-dev';
 
-// GitHub's exact dark-theme contribution colors
+// Electric Indigo & Cyan Glassmorphism contribution colors
 const COLORS = {
-  empty: '#161b22',
-  level1: '#0e4429',
-  level2: '#006d32',
-  level3: '#26a641',
-  level4: '#39d353',
+  empty: 'rgba(255, 255, 255, 0.07)',
+  level1: '#312e81',
+  level2: '#4338ca',
+  level3: '#6366f1',
+  level4: '#38bdf8',
 };
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -182,13 +182,27 @@ export default function GitHubStats() {
           </a>
         </div>
 
-        {/* Contribution Graph — Full Width GitHub-style */}
-        <div className="w-full p-4 sm:p-6 rounded-2xl bg-[#0d1117] border border-[#30363d]">
+        {/* Contribution Graph — Full Width Glassmorphic Style */}
+        <div className="w-full p-6 sm:p-8 rounded-2xl glass-card border border-white/15 shadow-2xl backdrop-blur-2xl">
 
           {/* Title */}
-          <p className="text-sm font-semibold text-[#c9d1d9] mb-4">
-            {loading ? 'Loading contributions...' : error ? 'Could not load contributions' : `${totalContributions.toLocaleString()} contributions in the last year`}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+            <p className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+              {loading ? 'Fetching contributions...' : error ? 'Could not load contributions' : `${totalContributions.toLocaleString()} contributions in the last year`}
+            </p>
+            <div className="flex items-center gap-2 text-xs text-slate-400">
+              <span>Less</span>
+              {[COLORS.empty, COLORS.level1, COLORS.level2, COLORS.level3, COLORS.level4].map((color, i) => (
+                <div
+                  key={i}
+                  className="w-3 h-3 rounded-sm border border-white/10"
+                  style={{ backgroundColor: color }}
+                />
+              ))}
+              <span>More</span>
+            </div>
+          </div>
 
           {/* SVG Graph — uses viewBox for full-width scaling */}
           {!loading && !error && weeks.length > 0 && (
@@ -204,7 +218,7 @@ export default function GitHubStats() {
                     key={i}
                     x={LABEL_WIDTH + label.col * (CELL_SIZE + CELL_GAP)}
                     y={12}
-                    fill="#8b949e"
+                    fill="#94a3b8"
                     fontSize="10"
                     fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
                   >
@@ -219,7 +233,7 @@ export default function GitHubStats() {
                       key={i}
                       x={0}
                       y={HEADER_HEIGHT + i * (CELL_SIZE + CELL_GAP) + CELL_SIZE - 1}
-                      fill="#8b949e"
+                      fill="#94a3b8"
                       fontSize="10"
                       fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
                     >
@@ -241,10 +255,10 @@ export default function GitHubStats() {
                         y={y}
                         width={CELL_SIZE}
                         height={CELL_SIZE}
-                        rx={2}
-                        ry={2}
+                        rx={2.5}
+                        ry={2.5}
                         fill={getColorForLevel(day.level)}
-                        className="cursor-pointer"
+                        className="cursor-pointer transition-all duration-200 hover:opacity-80"
                         style={{ outline: 'none' }}
                         onMouseEnter={(e) => {
                           const rect = e.currentTarget.getBoundingClientRect();
@@ -266,10 +280,10 @@ export default function GitHubStats() {
                 )}
               </svg>
 
-              {/* Tooltip */}
+              {/* Glass Tooltip */}
               {tooltip && (
                 <div
-                  className="absolute pointer-events-none z-20 px-3 py-1.5 rounded-lg bg-[#1b1f23] border border-[#484f58] text-[11px] text-[#c9d1d9] font-semibold whitespace-nowrap shadow-xl"
+                  className="absolute pointer-events-none z-20 px-3 py-1.5 rounded-xl glass-panel border border-white/25 text-[11px] text-white font-semibold whitespace-nowrap shadow-2xl backdrop-blur-xl"
                   style={{
                     left: tooltip.x,
                     top: tooltip.y,
@@ -277,7 +291,7 @@ export default function GitHubStats() {
                   }}
                 >
                   {tooltip.text}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-[#484f58]" />
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-white/30" />
                 </div>
               )}
             </div>
@@ -285,30 +299,17 @@ export default function GitHubStats() {
 
           {/* Loading skeleton */}
           {loading && (
-            <div className="w-full h-[120px] rounded-xl bg-[#161b22] animate-pulse flex items-center justify-center">
-              <span className="text-xs text-[#8b949e]">Fetching real-time data from GitHub...</span>
+            <div className="w-full h-[120px] rounded-xl glass-pill animate-pulse flex items-center justify-center">
+              <span className="text-xs text-slate-300 font-semibold">Fetching real-time activity from GitHub...</span>
             </div>
           )}
 
           {/* Error state */}
           {error && !loading && (
-            <div className="w-full h-[120px] rounded-xl bg-[#161b22] flex items-center justify-center">
-              <span className="text-xs text-[#8b949e]">Unable to load contribution data. <button onClick={fetchContributions} className="text-[#39d353] hover:underline cursor-pointer">Retry</button></span>
+            <div className="w-full h-[120px] rounded-xl glass-pill flex items-center justify-center">
+              <span className="text-xs text-slate-300">Unable to load contribution data. <button onClick={fetchContributions} className="text-indigo-400 hover:underline cursor-pointer">Retry</button></span>
             </div>
           )}
-
-          {/* Legend */}
-          <div className="flex items-center justify-end gap-2 mt-4">
-            <span className="text-[11px] text-[#8b949e]">Less</span>
-            {[COLORS.empty, COLORS.level1, COLORS.level2, COLORS.level3, COLORS.level4].map((color, i) => (
-              <div
-                key={i}
-                className="w-[10px] h-[10px] rounded-sm"
-                style={{ backgroundColor: color }}
-              />
-            ))}
-            <span className="text-[11px] text-[#8b949e]">More</span>
-          </div>
         </div>
 
       </div>
