@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import EducationExperience from "@/components/EducationExperience";
 import Footer from "@/components/Footer";
 import SpaceBackground from "@/components/SpaceBackground";
+import Partners from "@/components/Partners";
 import LoadingSpinner, { SectionLoader } from "@/components/LoadingSpinner";
 
 // Dynamically import below-the-fold / interactive client components to defer bundle loading and hydration
@@ -37,6 +38,7 @@ export default function Home() {
         <AboutMe />
         <Skills />
         <EducationExperience />
+        <Partners />
         <Projects />
         <GitHubStats />
         <Contact />
