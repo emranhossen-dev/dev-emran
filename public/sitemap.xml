@@ -3,13 +3,13 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://emran.work</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://emran.work/emran-hossen-developer-2026.jpg</image:loc>
-      <image:title>Emran Hossen - Full Stack Web Developer Portfolio</image:title>
-      <image:caption>Emran Hossen, Full Stack Web Developer and Next.js Specialist from Bangladesh.</image:caption>
+      <image:title>Emran Hossen | Software Engineer &amp; Full Stack Web Developer</image:title>
+      <image:caption>Emran Hossen is a professional Software Engineer &amp; Full Stack Web Developer based in Narsingdi, Dhaka, Bangladesh.</image:caption>
     </image:image>
   </url>
 </urlset>
