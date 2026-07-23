@@ -570,12 +570,12 @@ export default function AdminDashboard() {
           </div>
 
           {/* RIGHT EMAIL READING PAPER & INLINE EMBEDDED REPLY WORKSPACE */}
-          <div className="flex-1 bg-[#070d1e] overflow-y-auto p-6 lg:p-10 h-[calc(100vh-4rem)]">
+          <div className="flex-1 bg-[#091124]/30 overflow-y-auto h-[calc(100vh-4rem)]">
             {activeMsg ? (
-              <div className="max-w-4xl mx-auto animate-fade-in pb-16">
+              <div className="max-w-4xl mx-auto p-6 lg:p-10 space-y-6 animate-fade-in pb-16">
                 
-                {/* UNIFIED GMAIL ELEGANT READING PAPER CARD */}
-                <div className="glass-card rounded-3xl border border-white/10 bg-[#091124] shadow-2xl p-6 sm:p-8 space-y-6">
+                {/* UNIFIED SEAMLESS EMAIL WORKSPACE */}
+                <div className="space-y-6">
                   
                   {/* Top Subject Title Bar */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
