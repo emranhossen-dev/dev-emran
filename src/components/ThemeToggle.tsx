@@ -8,49 +8,55 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // Check initial theme state on mount
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    let initialTheme: 'light' | 'dark' = 'dark';
+    const isDark = savedTheme
+      ? savedTheme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches || document.documentElement.classList.contains('dark');
 
-    if (savedTheme) {
-      initialTheme = savedTheme;
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      setTheme('dark');
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      initialTheme = prefersDark ? 'dark' : 'light';
+      document.documentElement.classList.remove('dark');
+      setTheme('light');
     }
-
-    document.documentElement.classList.toggle('dark', initialTheme === 'dark');
-
-    const timer = setTimeout(() => {
-      setTheme(initialTheme);
-      setMounted(true);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setMounted(true);
   }, []);
 
   const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('theme', nextTheme);
-    document.documentElement.classList.toggle('dark', nextTheme === 'dark');
+    const isDarkNow = document.documentElement.classList.contains('dark');
+    if (isDarkNow) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setTheme('light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setTheme('dark');
+    }
   };
 
-  if (!mounted) {
-    return (
-      <div className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-slate-200/50 dark:bg-zinc-800/50 animate-pulse border border-slate-300 dark:border-zinc-700" />
-    );
-  }
+  if (!mounted) return null;
 
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 rounded-full glass-panel shadow-xl text-slate-800 dark:text-zinc-100 hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer border border-white/20 dark:border-white/5"
-      aria-label="Toggle theme"
+      type="button"
+      className="fixed bottom-6 right-6 z-[999] flex items-center justify-center gap-2 px-3.5 py-3 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white shadow-2xl border-2 border-indigo-500/40 hover:border-indigo-500 hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer backdrop-blur-xl group"
+      aria-label="Toggle Light and Dark Theme"
+      title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
     >
       {theme === 'dark' ? (
-        <Sun className="w-5 h-5 text-amber-400 animate-pulse" />
+        <>
+          <Sun className="w-5 h-5 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
+          <span className="text-xs font-bold tracking-wide text-amber-400 pr-1">Light</span>
+        </>
       ) : (
-        <Moon className="w-5 h-5 text-indigo-600" />
+        <>
+          <Moon className="w-5 h-5 text-indigo-600 group-hover:-rotate-12 transition-transform duration-300" />
+          <span className="text-xs font-bold tracking-wide text-indigo-600 pr-1">Dark</span>
+        </>
       )}
     </button>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -17,8 +17,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -54,6 +56,19 @@ export default function Navbar() {
       observer.disconnect();
     };
   }, []);
+
+  const toggleNavbarTheme = () => {
+    const currentlyDark = document.documentElement.classList.contains('dark');
+    if (currentlyDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+    }
+  };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -118,8 +133,22 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Desktop CTA + Mobile Toggle */}
+          {/* Desktop CTA + Navbar Theme Toggle + Mobile Toggle */}
           <div className="flex items-center gap-3 z-10">
+            <button
+              onClick={toggleNavbarTheme}
+              type="button"
+              className="p-2.5 rounded-xl bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/60 text-slate-700 dark:text-zinc-200 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+              aria-label="Toggle Theme"
+              title="Toggle Theme"
+            >
+              {isDark ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-600" />
+              )}
+            </button>
+
             <a
               href="#contact"
               onClick={e => handleClick(e, '#contact')}

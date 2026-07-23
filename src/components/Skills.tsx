@@ -237,15 +237,15 @@ function SkillCard({ skill }: { skill: Skill }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <div
-        className="w-14 h-14 rounded-full flex items-center justify-center border border-white/10"
+        className="w-14 h-14 rounded-full flex items-center justify-center border border-slate-200/80 dark:border-white/10 shadow-sm"
         style={{
-          background: skill.circleBg ?? 'rgba(255,255,255,0.07)',
+          background: skill.circleBg ?? 'rgba(120, 120, 120, 0.08)',
           backdropFilter: 'blur(8px)',
         }}
       >
         {skill.icon}
       </div>
-      <span className="text-[10.5px] font-semibold text-slate-300 text-center leading-tight max-w-[60px]">
+      <span className="text-[10.5px] font-semibold text-slate-700 dark:text-slate-300 text-center leading-tight max-w-[60px]">
         {skill.name}
       </span>
     </div>
@@ -264,8 +264,8 @@ function SkillCategory({ title, icon, skills }: CategoryProps) {
   return (
     <div className="glass-card rounded-2xl p-6 flex flex-col gap-6">
       <div className="flex items-center gap-2">
-        <span className="text-indigo-400">{icon}</span>
-        <h3 className="text-base font-bold text-white tracking-wide">{title}</h3>
+        <span className="text-indigo-600 dark:text-indigo-400">{icon}</span>
+        <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-wide">{title}</h3>
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-5">
         {skills.map((skill) => (
@@ -287,13 +287,13 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="inline-block px-4 py-1.5 rounded-full glass-pill text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full glass-pill text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">
             Tech Stack
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
             My <span className="text-gradient">Skills</span>
           </h2>
-          <p className="mt-3 text-slate-400 text-sm sm:text-base">
+          <p className="mt-3 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
             Technologies and tools I use to build modern, scalable products.
           </p>
         </div>
