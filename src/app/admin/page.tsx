@@ -78,6 +78,10 @@ export default function AdminDashboard() {
   }, [selectedMsgId]);
 
   useEffect(() => {
+    // Force Dark Mode on Admin Workspace
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+
     const token = localStorage.getItem('admin_token');
     const storedUser = localStorage.getItem('admin_user');
 
