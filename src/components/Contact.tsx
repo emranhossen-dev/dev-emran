@@ -115,7 +115,7 @@ export default function Contact() {
                 
                 {/* Email Card */}
                 <a
-                  href="mailto:dev.emranhossen@gmail.com"
+                  href="mailto:dev@emran.work"
                   className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
                 >
                   <div className="p-3 rounded-xl glass-pill text-indigo-400">
@@ -123,7 +123,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send an Email</p>
-                    <p className="text-sm font-semibold text-white mt-0.5">dev.emranhossen@gmail.com</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">dev@emran.work</p>
                   </div>
                 </a>
 
