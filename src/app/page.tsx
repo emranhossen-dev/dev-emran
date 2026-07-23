@@ -7,6 +7,7 @@ import EducationExperience from "@/components/EducationExperience";
 import Footer from "@/components/Footer";
 import SpaceBackground from "@/components/SpaceBackground";
 import LoadingSpinner, { SectionLoader } from "@/components/LoadingSpinner";
+import ScrollReveal from "@/components/ScrollReveal";
 
 // Dynamically import below-the-fold / interactive client components to defer bundle loading and hydration
 const Projects = dynamic(() => import("@/components/Projects"), {
@@ -28,14 +29,32 @@ export default function Home() {
       <LoadingSpinner />
       <Navbar />
 
-      <main className="flex-1 w-full relative z-10">
+      <main className="flex-1 w-full relative z-10 overflow-hidden">
         <Hero />
-        <AboutMe />
-        <Skills />
-        <EducationExperience />
-        <Projects />
-        <GitHubStats />
-        <Contact />
+
+        <ScrollReveal variant="fade-up">
+          <AboutMe />
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up">
+          <Skills />
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up">
+          <EducationExperience />
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up">
+          <Projects />
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up">
+          <GitHubStats />
+        </ScrollReveal>
+
+        <ScrollReveal variant="fade-up">
+          <Contact />
+        </ScrollReveal>
       </main>
 
       <Footer />
