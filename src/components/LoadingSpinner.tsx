@@ -7,9 +7,10 @@ export default function LoadingSpinner() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Ultra-fast loader dismissal (180ms) to allow instant Hero section rendering & top Lighthouse scores
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 600);
+    }, 180);
 
     return () => clearTimeout(timer);
   }, []);
