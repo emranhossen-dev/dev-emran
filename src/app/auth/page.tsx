@@ -103,7 +103,7 @@ export default function AuthPage() {
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="dev.emranhossen@gmail.com"
+                    placeholder="Enter admin email"
                     className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-all shadow-inner"
                     required
                   />
