@@ -72,8 +72,7 @@ export default function AdminDashboard() {
       }
     } catch {
       showToast('⚠️ Failed to refresh emails');
-    } font-sans
-    finally {
+    } finally {
       setLoading(false);
     }
   }, [selectedMsgId]);
