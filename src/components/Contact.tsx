@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Phone, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 export default function Contact() {
   const router = useRouter();
@@ -55,12 +56,38 @@ export default function Contact() {
       if (res.ok) {
         setIsSubmitted(true);
         setFormState({ name: '', email: '', message: '' });
+        
+        // SweetAlert2 Beautiful Popup Notification
+        Swal.fire({
+          title: 'Thank You for Your Message!',
+          text: 'Your inquiry has been received successfully. Emran Hossen will get back to you shortly.',
+          icon: 'success',
+          confirmButtonText: 'Great!',
+          confirmButtonColor: '#4f46e5',
+          background: document.documentElement.classList.contains('dark') ? '#0b1428' : '#ffffff',
+          color: document.documentElement.classList.contains('dark') ? '#ffffff' : '#0f172a',
+          customClass: {
+            popup: 'rounded-3xl border border-indigo-500/30 shadow-2xl backdrop-blur-xl',
+            confirmButton: 'px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/30',
+          },
+        });
+
         setTimeout(() => setIsSubmitted(false), 5000);
       } else {
-        alert('Failed to send message. Please try again.');
+        Swal.fire({
+          title: 'Submission Failed',
+          text: 'Failed to send message. Please check your connection and try again.',
+          icon: 'error',
+          confirmButtonColor: '#ef4444',
+        });
       }
     } catch {
-      alert('Error sending message. Please check your connection.');
+      Swal.fire({
+        title: 'Error',
+        text: 'An unexpected error occurred. Please try again.',
+        icon: 'error',
+        confirmButtonColor: '#ef4444',
+      });
     } finally {
       setIsSubmitting(false);
     }
