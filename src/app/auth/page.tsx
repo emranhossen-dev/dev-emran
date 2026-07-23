@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, Sparkles, KeyRound } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -50,14 +51,22 @@ export default function AuthPage() {
   return (
     <>
       <SpaceBackground />
+      <ThemeToggle />
       
       <main className="min-h-screen flex items-center justify-center p-6 relative z-10">
-        <div className="w-full max-w-md">
+        {/* Cosmic Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none" />
+
+        <div className="w-full max-w-md relative z-10">
           
           {/* Logo & Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mx-auto mb-4 backdrop-blur-xl shadow-xl">
-              <ShieldCheck className="w-8 h-8 text-indigo-500 dark:text-indigo-400" />
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-pill text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4 border border-indigo-500/20">
+              <KeyRound className="w-3.5 h-3.5" />
+              Restricted Area
+            </span>
+            <div className="w-16 h-16 rounded-2xl bg-indigo-600/15 border border-indigo-500/30 flex items-center justify-center mx-auto mb-4 backdrop-blur-xl shadow-2xl shadow-indigo-600/20">
+              <ShieldCheck className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
               Admin Portal <span className="text-gradient">Access</span>
@@ -92,7 +101,7 @@ export default function AuthPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="dev.emranhossen@gmail.com"
-                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-all shadow-inner"
                     required
                   />
                 </div>
@@ -112,7 +121,7 @@ export default function AuthPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-10 pr-12 py-3 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="w-full pl-10 pr-12 py-3.5 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700/80 text-slate-900 dark:text-white text-sm placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-all shadow-inner"
                     required
                   />
                   <button
@@ -126,8 +135,8 @@ export default function AuthPage() {
               </div>
 
               {/* Quick Helper Credentials Info */}
-              <div className="p-3.5 rounded-xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                💡 <span className="font-bold">Credentials:</span> Email: <code className="text-indigo-600 dark:text-indigo-400 font-mono">admin@emran.work</code> | Pass: <code className="text-indigo-600 dark:text-indigo-400 font-mono">emran2026</code>
+              <div className="p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                💡 <span className="font-bold">Credentials:</span> Email: <code className="text-indigo-600 dark:text-indigo-400 font-mono font-bold">dev.emranhossen@gmail.com</code> | Pass: <code className="text-indigo-600 dark:text-indigo-400 font-mono font-bold">Emran404@#$</code>
               </div>
 
               {/* Submit Button */}
@@ -151,7 +160,7 @@ export default function AuthPage() {
 
           {/* Footer Back link */}
           <div className="text-center mt-6">
-            <a href="/" className="text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+            <a href="/" className="text-xs text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">
               ← Return to Portfolio Website
             </a>
           </div>

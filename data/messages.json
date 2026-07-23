@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "msg_1784767419472_s8g1r",
+    "name": "Rahim Ahmed",
+    "email": "rahim.test@example.com",
+    "subject": "Web Development Project Query",
+    "message": "Hello Emran! I need a Next.js e-commerce application built. Let us discuss budget and timeline.",
+    "createdAt": "2026-07-23T00:43:39.472Z",
+    "read": false
+  }
+]
