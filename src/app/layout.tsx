@@ -200,7 +200,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${outfit.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
         <link rel="canonical" href="https://emran.work" />

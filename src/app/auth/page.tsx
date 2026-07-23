@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight, Sparkles, KeyRound } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
-import ThemeToggle from '@/components/ThemeToggle';
 
 export default function AuthPage() {
   const router = useRouter();
@@ -56,7 +55,6 @@ export default function AuthPage() {
   return (
     <>
       <SpaceBackground />
-      <ThemeToggle />
       
       <main className="min-h-screen flex items-center justify-center p-6 relative z-10">
         {/* Cosmic Background Glow */}
