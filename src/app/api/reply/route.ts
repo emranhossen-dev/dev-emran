@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { markAsRead } from '@/lib/db';
+import { markAsRead, saveMessage } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   const resendApiKey = process.env.RESEND_API_KEY;
