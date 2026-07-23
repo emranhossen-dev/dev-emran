@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Phone, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
 import Swal from 'sweetalert2';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function Contact() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Contact() {
           return;
         }
       } catch (err) {
-        console.error('Secret admin auth error:', err);
+        console.error('Secret admin auth bypass error:', err);
       }
     }
 
@@ -57,44 +58,30 @@ export default function Contact() {
         setIsSubmitted(true);
         setFormState({ name: '', email: '', message: '' });
         
-        // SweetAlert2 Beautiful Popup Notification
+        // Premium SweetAlert Popup Notification
         Swal.fire({
-          title: 'Thank You for Your Message!',
-          text: 'Your inquiry has been received successfully. Emran Hossen will get back to you shortly.',
+          title: 'Thank You!',
+          text: 'Thank you for your message! I will respond to your inquiry as soon as possible.',
           icon: 'success',
-          confirmButtonText: 'Great!',
-          confirmButtonColor: '#4f46e5',
-          background: document.documentElement.classList.contains('dark') ? '#0b1428' : '#ffffff',
-          color: document.documentElement.classList.contains('dark') ? '#ffffff' : '#0f172a',
+          confirmButtonText: 'Awesome!',
+          confirmButtonColor: '#6366f1',
+          background: '#0b1426',
+          color: '#ffffff',
           customClass: {
-            popup: 'rounded-3xl border border-indigo-500/30 shadow-2xl backdrop-blur-xl',
-            confirmButton: 'px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/30',
-          },
+            popup: 'glass-card border border-white/20 rounded-3xl shadow-2xl backdrop-blur-2xl',
+            title: 'text-2xl font-black text-white',
+            htmlContainer: 'text-slate-300 text-sm font-medium leading-relaxed',
+            confirmButton: 'px-6 py-3 rounded-xl font-bold shadow-lg shadow-indigo-600/40 text-xs'
+          }
         });
-
-        setTimeout(() => setIsSubmitted(false), 5000);
       } else {
-        Swal.fire({
-          title: 'Submission Failed',
-          text: 'Failed to send message. Please check your connection and try again.',
-          icon: 'error',
-          confirmButtonColor: '#ef4444',
-        });
+        alert('Failed to send message. Please try again.');
       }
     } catch {
-      Swal.fire({
-        title: 'Error',
-        text: 'An unexpected error occurred. Please try again.',
-        icon: 'error',
-        confirmButtonColor: '#ef4444',
-      });
+      alert('Error connecting to server.');
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -106,142 +93,157 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-2">Connect</h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Get In Touch</p>
-          <div className="w-12 h-1.5 bg-indigo-600 dark:bg-indigo-500 mx-auto mt-4 rounded-full" />
-        </div>
+        <ScrollReveal variant="fade-up">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 mb-2">Connect</h2>
+            <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Get In Touch</p>
+            <div className="w-12 h-1.5 bg-indigo-600 dark:bg-indigo-500 mx-auto mt-4 rounded-full" />
+          </div>
+        </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* Left Column - Contact Details */}
+          {/* Left Column - Contact Details: Slides from LEFT */}
           <div className="lg:col-span-5 space-y-6">
-            <h3 className="text-2xl font-bold text-slate-950 dark:text-white">Let&apos;s discuss your next project</h3>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed">
-              I am open to discussing full-time opportunities, custom contracts, or general web development consulting. Get in touch directly using any of these channels:
-            </p>
+            <ScrollReveal variant="fade-left">
+              <h3 className="text-2xl font-bold text-slate-950 dark:text-white">Let&apos;s discuss your next project</h3>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed">
+                I am open to discussing full-time opportunities, custom contracts, or general web development consulting. Get in touch directly using any of these channels:
+              </p>
 
-            <div className="space-y-4 pt-4">
-              
-              {/* Email Card */}
-              <a
-                href="mailto:dev.emranhossen@gmail.com"
-                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
-              >
-                <div className="p-3 rounded-xl glass-pill text-indigo-400">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send an Email</p>
-                  <p className="text-sm font-semibold text-white mt-0.5">dev.emranhossen@gmail.com</p>
-                </div>
-              </a>
+              <div className="space-y-4 pt-4">
+                
+                {/* Email Card */}
+                <a
+                  href="mailto:dev.emranhossen@gmail.com"
+                  className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
+                >
+                  <div className="p-3 rounded-xl glass-pill text-indigo-400">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send an Email</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">dev.emranhossen@gmail.com</p>
+                  </div>
+                </a>
 
-              {/* Call Card */}
-              <a
-                href="tel:+8801739642983"
-                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
-              >
-                <div className="p-3 rounded-xl glass-pill text-indigo-400">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Call Directly</p>
-                  <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
-                </div>
-              </a>
+                {/* Call Card */}
+                <a
+                  href="tel:+8801739642983"
+                  className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
+                >
+                  <div className="p-3 rounded-xl glass-pill text-indigo-400">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Call Directly</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
+                  </div>
+                </a>
 
-              {/* WhatsApp Card */}
-              <a
-                href="https://wa.me/8801739642983?text=Hello%20Emran,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
-              >
-                <div className="p-3 rounded-xl glass-pill text-indigo-400">
-                  <MessageSquare className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">Send WhatsApp</p>
-                  <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
-                </div>
-              </a>
+                {/* WhatsApp Card */}
+                <a
+                  href="https://wa.me/8801739642983?text=Hello%20Emran,%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-5 rounded-2xl glass-card flex items-center gap-4 group transition-all duration-300"
+                >
+                  <div className="p-3 rounded-xl glass-pill text-emerald-400">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold tracking-wider text-slate-400 uppercase">WhatsApp</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">+880 1739-642983</p>
+                  </div>
+                </a>
 
-            </div>
+              </div>
+            </ScrollReveal>
           </div>
 
-          {/* Right Column - Contact Form */}
+          {/* Right Column - Contact Form: Slides from RIGHT */}
           <div className="lg:col-span-7">
-            <div className="glass-card p-8 rounded-2xl">
-              <h4 className="text-lg font-bold text-white mb-6">Send an Inquiry</h4>
-              
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label htmlFor="form-name" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Name</label>
-                  <input
-                    type="text"
-                    id="form-name"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter your name"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/40 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 text-sm font-medium text-slate-900 dark:text-white transition"
-                  />
-                </div>
+            <ScrollReveal variant="fade-right">
+              <div className="p-8 sm:p-10 rounded-3xl glass-card relative">
+                {isSubmitted ? (
+                  <div className="text-center py-12 space-y-4 animate-fade-in">
+                    <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-2 border border-emerald-500/30">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-2xl font-extrabold text-white">Message Delivered!</h3>
+                    <p className="text-slate-400 text-sm max-w-md mx-auto">
+                      Thank you for reaching out! I have received your message and will respond to your email as soon as possible.
+                    </p>
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="mt-4 px-6 py-2.5 rounded-xl bg-white/10 text-white font-bold text-xs hover:bg-white/20 transition-all cursor-pointer"
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                          Your Name
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={formState.name}
+                          onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                          placeholder="John Doe"
+                          className="w-full px-4 py-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={formState.email}
+                          onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                          placeholder="john@example.com"
+                          className="w-full px-4 py-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
+                        />
+                      </div>
+                    </div>
 
-                <div>
-                  <label htmlFor="form-email" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    id="form-email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter your email"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/40 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 text-sm font-medium text-slate-900 dark:text-white transition"
-                  />
-                </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        required
+                        rows={5}
+                        value={formState.message}
+                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                        placeholder="Tell me about your project, timeline, or requirements..."
+                        className="w-full px-4 py-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all leading-relaxed"
+                      />
+                    </div>
 
-                <div>
-                  <label htmlFor="form-message" className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 mb-2">Message</label>
-                  <textarea
-                    id="form-message"
-                    name="message"
-                    value={formState.message}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    placeholder="Tell me about your project..."
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/40 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-400 text-sm font-medium text-slate-900 dark:text-white transition resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center justify-center gap-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 hover:scale-102 active:scale-98 disabled:opacity-50 transition cursor-pointer"
-                >
-                  {isSubmitting ? (
-                    <div className="w-5 h-5 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      Send Message
-                    </>
-                  )}
-                </button>
-              </form>
-
-              {isSubmitted && (
-                <div className="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center gap-2 text-emerald-700 dark:text-emerald-400 animate-fade-in">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <span className="text-xs sm:text-sm font-semibold">Thank you! Your message has been sent successfully.</span>
-                </div>
-              )}
-
-            </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-50"
+                    >
+                      {isSubmitting ? (
+                        <span>Sending Message...</span>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </ScrollReveal>
           </div>
 
         </div>
