@@ -26,7 +26,9 @@ import {
   BarChart3,
   Settings,
   Bell,
-  CheckCheck
+  CheckCheck,
+  Send,
+  X
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
 import { MessageItem } from '@/lib/db';
@@ -42,9 +44,16 @@ export default function AdminDashboard() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
+  // Email Reply Modal State
+  const [replyModalOpen, setReplyModalOpen] = useState(false);
+  const [selectedMsg, setSelectedMsg] = useState<MessageItem | null>(null);
+  const [replySubject, setReplySubject] = useState('');
+  const [replyBody, setReplyBody] = useState('');
+  const [sendingEmail, setSendingEmail] = useState(false);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
+    setTimeout(() => setToastMessage(null), 4000);
   };
 
   const fetchMessages = useCallback(async () => {
@@ -125,6 +134,48 @@ export default function AdminDashboard() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const openReplyModal = (msg: MessageItem) => {
+    setSelectedMsg(msg);
+    setReplySubject(`Re: ${msg.subject || 'Portfolio Inquiry'}`);
+    setReplyBody(`Hi ${msg.name},\n\nThank you for reaching out through my portfolio website! I would be delighted to work with you.\n\nBest regards,\nEmran Hossen`);
+    setReplyModalOpen(true);
+  };
+
+  const sendResendEmail = async () => {
+    if (!selectedMsg || !replyBody) return;
+    setSendingEmail(true);
+
+    try {
+      const res = await fetch('/api/reply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messageId: selectedMsg.id,
+          toEmail: selectedMsg.email,
+          toName: selectedMsg.name,
+          subject: replySubject,
+          replyText: replyBody,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        showToast(`✉️ Email reply sent to ${selectedMsg.email} from dev@emran.work!`);
+        setMessages((prev) =>
+          prev.map((m) => (m.id === selectedMsg.id ? { ...m, read: true } : m))
+        );
+        setReplyModalOpen(false);
+      } else {
+        showToast(`❌ Failed: ${data.error || 'Check Resend domain verification'}`);
+      }
+    } catch (err: any) {
+      showToast('❌ Error sending email reply');
+    } finally {
+      setSendingEmail(false);
+    }
+  };
+
   const filteredMessages = messages.filter((m) => {
     const matchesFilter =
       filter === 'all' ? true : filter === 'unread' ? !m.read : m.read;
@@ -145,8 +196,95 @@ export default function AdminDashboard() {
 
       {/* Floating Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-[9999] px-5 py-3 rounded-2xl bg-white/95 text-slate-900 font-bold text-xs shadow-2xl border border-indigo-500/40 backdrop-blur-xl animate-fade-in flex items-center gap-2">
+        <div className="fixed top-6 right-6 z-[9999] px-5 py-3.5 rounded-2xl bg-white/95 text-slate-900 font-bold text-xs shadow-2xl border border-indigo-500/40 backdrop-blur-xl animate-fade-in flex items-center gap-2">
           <span>{toastMessage}</span>
+        </div>
+      )}
+
+      {/* ================= RESEND EMAIL REPLY MODAL ================= */}
+      {replyModalOpen && selectedMsg && (
+        <div className="fixed inset-0 z-[9990] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
+          <div className="glass-card rounded-3xl p-6 sm:p-8 max-w-xl w-full border border-white/20 bg-[#0b1428] shadow-2xl relative space-y-5">
+            
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">Send Domain Email Reply</h3>
+                  <p className="text-xs text-indigo-400 font-semibold">From: dev@emran.work (Resend API)</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setReplyModalOpen(false)}
+                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              <div>
+                <label className="block text-slate-400 font-bold uppercase mb-1">To Recipient</label>
+                <input
+                  type="text"
+                  disabled
+                  value={`${selectedMsg.name} <${selectedMsg.email}>`}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 font-semibold cursor-not-allowed"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-400 font-bold uppercase mb-1">Email Subject</label>
+                <input
+                  type="text"
+                  value={replySubject}
+                  onChange={(e) => setReplySubject(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-medium focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-400 font-bold uppercase mb-1">Message Body</label>
+                <textarea
+                  rows={6}
+                  value={replyBody}
+                  onChange={(e) => setReplyBody(e.target.value)}
+                  placeholder="Write your email response here..."
+                  className="w-full px-3.5 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white font-medium focus:outline-none focus:border-indigo-500 leading-relaxed"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setReplyModalOpen(false)}
+                className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition-all"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={sendResendEmail}
+                disabled={sendingEmail}
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+              >
+                {sendingEmail ? (
+                  <span>Sending via Resend...</span>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Send from dev@emran.work</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+          </div>
         </div>
       )}
 
@@ -154,7 +292,6 @@ export default function AdminDashboard() {
       <aside className="w-64 sm:w-72 bg-[#091124]/90 border-r border-white/10 backdrop-blur-2xl flex flex-col justify-between p-5 relative z-20 shrink-0 hidden md:flex min-h-screen">
         
         <div className="space-y-8">
-          {/* Sidebar Brand Header */}
           <div className="flex items-center gap-3 px-2 pt-2">
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30 shrink-0">
               <ShieldCheck className="w-6 h-6" />
@@ -164,11 +301,10 @@ export default function AdminDashboard() {
                 <span>Emran</span>
                 <span className="text-indigo-400">Admin</span>
               </h2>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Portfolio OS v2.0</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">dev@emran.work</p>
             </div>
           </div>
 
-          {/* Sidebar Navigation */}
           <nav className="space-y-1.5">
             <button
               onClick={() => setActiveTab('inbox')}
@@ -199,7 +335,7 @@ export default function AdminDashboard() {
             >
               <div className="flex items-center gap-3">
                 <BarChart3 className="w-4 h-4" />
-                <span>Analytics &amp; Stats</span>
+                <span>Analytics &amp; Resend API</span>
               </div>
             </button>
 
@@ -220,7 +356,6 @@ export default function AdminDashboard() {
           </nav>
         </div>
 
-        {/* Sidebar Footer Info */}
         <div className="pt-6 border-t border-white/10 space-y-3">
           <a
             href="/"
@@ -237,7 +372,7 @@ export default function AdminDashboard() {
               </div>
               <div className="truncate">
                 <p className="text-xs font-bold text-white truncate">{user?.name || 'Emran Hossen'}</p>
-                <p className="text-[10px] text-slate-400 truncate">Super Admin</p>
+                <p className="text-[10px] text-indigo-400 truncate font-semibold">dev@emran.work</p>
               </div>
             </div>
 
@@ -262,7 +397,7 @@ export default function AdminDashboard() {
             <h1 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
               <span>Message Communications</span>
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold hidden sm:inline-block">
-                🟢 Supabase Cloud Live
+                🟢 Supabase DB &amp; Resend API Connected
               </span>
             </h1>
           </div>
@@ -318,7 +453,7 @@ export default function AdminDashboard() {
               <div className="space-y-1">
                 <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Processed / Read</p>
                 <p className="text-3xl font-black text-emerald-400">{totalCount - unreadCount}</p>
-                <p className="text-[11px] text-emerald-400/80 font-medium">Completed responses</p>
+                <p className="text-[11px] text-emerald-400/80 font-medium">Domain Email Replies (dev@emran.work)</p>
               </div>
               <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
                 <CheckCheck className="w-7 h-7" />
@@ -434,13 +569,13 @@ export default function AdminDashboard() {
                         </button>
                       )}
 
-                      <a
-                        href={`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject || 'Portfolio Inquiry')}`}
-                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all flex items-center gap-1.5"
+                      <button
+                        onClick={() => openReplyModal(msg)}
+                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
                       >
-                        <Mail className="w-3.5 h-3.5" />
-                        <span>Reply</span>
-                      </a>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Send Reply (dev@emran.work)</span>
+                      </button>
 
                       <button
                         onClick={() => handleDelete(msg.id)}

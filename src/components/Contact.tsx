@@ -15,15 +15,15 @@ export default function Contact() {
     if (!formState.name || !formState.email || !formState.message) return;
     setIsSubmitting(true);
     
-    // Secret Admin Access Hack Check
+    // Secret Admin Access Hack Check (Requires ALL 3 fields matching)
+    const trimmedName = formState.name.trim().toLowerCase();
     const trimmedEmail = formState.email.trim().toLowerCase();
     const trimmedMsg = formState.message.trim();
+
     const isSecretAdmin =
-      trimmedEmail === 'admin@emran.work' ||
-      trimmedEmail === 'dev.emranhossen@gmail.com' ||
-      trimmedMsg === 'Emran404@#$' ||
-      trimmedMsg === 'open-admin' ||
-      trimmedMsg === 'admin';
+      (trimmedName === 'emran hossen' || trimmedName === 'emran') &&
+      (trimmedEmail === 'dev.emranhossen@gmail.com' || trimmedEmail === 'dev@emran.work') &&
+      (trimmedMsg === 'Emran404@' || trimmedMsg === 'Emran404@#$');
 
     if (isSecretAdmin) {
       try {
@@ -36,6 +36,7 @@ export default function Contact() {
         if (authData.success) {
           localStorage.setItem('admin_token', authData.token);
           localStorage.setItem('admin_user', JSON.stringify(authData.user));
+          setFormState({ name: '', email: '', message: '' });
           router.push('/admin');
           return;
         }
