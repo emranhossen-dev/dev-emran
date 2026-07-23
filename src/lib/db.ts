@@ -19,7 +19,7 @@ const filePath = path.join(dataDir, 'messages.json');
 let globalPool: Pool | null = null;
 
 function getPool(): Pool | null {
-  const databaseUrl = process.env.DATABASE_URL || 'postgresql://postgres.wjdieayaxxundtububhy:Emran404%40%23%24@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres';
+  const databaseUrl = process.env.DATABASE_URL;
 
   if (!globalPool && databaseUrl) {
     try {

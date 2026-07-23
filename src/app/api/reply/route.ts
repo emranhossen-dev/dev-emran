@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { markAsRead } from '@/lib/db';
 
-const resendApiKey = process.env.RESEND_API_KEY || 're_TbjrBYJC_LGkLggnrsNArYgY5yZZ514PF';
-const resend = new Resend(resendApiKey);
-
 export async function POST(req: NextRequest) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (!resendApiKey) {
+    return NextResponse.json({ error: 'RESEND_API_KEY is not configured in environment variables' }, { status: 500 });
+  }
+  const resend = new Resend(resendApiKey);
   try {
     const body = await req.json();
     const { messageId, toEmail, toName, subject, replyText } = body;
