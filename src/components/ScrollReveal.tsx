@@ -26,12 +26,12 @@ export default function ScrollReveal({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.unobserve(element); // Reveal once
+          observer.unobserve(element);
         }
       },
       {
-        rootMargin: '0px 0px -50px 0px',
-        threshold: 0.1,
+        rootMargin: '0px 0px -60px 0px',
+        threshold: 0.12,
       }
     );
 
@@ -47,20 +47,20 @@ export default function ScrollReveal({
       case 'zoom-in':
         return isVisible
           ? 'opacity-100 scale-100 translate-y-0'
-          : 'opacity-0 scale-95 translate-y-6';
+          : 'opacity-0 scale-90 translate-y-10';
       case 'fade-left':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 -translate-x-10';
+          : 'opacity-0 -translate-x-16 sm:-translate-x-24';
       case 'fade-right':
         return isVisible
           ? 'opacity-100 translate-x-0'
-          : 'opacity-0 translate-x-10';
+          : 'opacity-0 translate-x-16 sm:translate-x-24';
       case 'fade-up':
       default:
         return isVisible
           ? 'opacity-100 translate-y-0'
-          : 'opacity-0 translate-y-10';
+          : 'opacity-0 translate-y-14';
     }
   };
 
@@ -69,7 +69,7 @@ export default function ScrollReveal({
       ref={ref}
       style={{
         transitionDelay: `${delay}ms`,
-        transitionDuration: '800ms',
+        transitionDuration: '850ms',
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
       }}
       className={`transition-all ${getVariantStyles()} ${className}`}

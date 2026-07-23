@@ -32,23 +32,24 @@ export default function Home() {
       <main className="flex-1 w-full relative z-10 overflow-hidden">
         <Hero />
 
-        <ScrollReveal variant="fade-up">
+        {/* 2-Side Motion Scroll Reveal Sections */}
+        <ScrollReveal variant="fade-left">
           <AboutMe />
         </ScrollReveal>
 
-        <ScrollReveal variant="fade-up">
+        <ScrollReveal variant="fade-right">
           <Skills />
         </ScrollReveal>
 
-        <ScrollReveal variant="fade-up">
+        <ScrollReveal variant="fade-left">
           <EducationExperience />
         </ScrollReveal>
 
-        <ScrollReveal variant="fade-up">
+        <ScrollReveal variant="zoom-in">
           <Projects />
         </ScrollReveal>
 
-        <ScrollReveal variant="fade-up">
+        <ScrollReveal variant="fade-right">
           <GitHubStats />
         </ScrollReveal>
 
