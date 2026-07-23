@@ -6,7 +6,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  // Skip ES polyfills for modern browsers — eliminates 14 KiB legacy JS bundle
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000, // 1 year cache for images
     remotePatterns: [
       {
         protocol: "https",
@@ -23,10 +29,6 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i.ibb.co.com",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.jsdelivr.net",
       },
     ],
   },

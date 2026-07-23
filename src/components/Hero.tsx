@@ -145,30 +145,54 @@ export default function Hero() {
 
             {/* 3 single-icon floating badges — positioned outside the circle, never overlapping photo */}
 
-            {/* Next.js — top right, pushed well outside the circle */}
+            {/* Next.js badge — inline SVG, no CDN request */}
             <div
               className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
               style={{ top: '-2.5rem', right: '-3.5rem', animationDelay: '0.5s' }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" alt="Next.js" width={20} height={20} />
+              <svg width="20" height="20" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Next.js">
+                <mask id="nextjs-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
+                  <circle cx="90" cy="90" r="90" fill="white" />
+                </mask>
+                <g mask="url(#nextjs-mask)">
+                  <circle cx="90" cy="90" r="90" fill="black" />
+                  <path d="M149.508 157.52L69.142 54H54V125.97H66.1V69.439L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="white" />
+                  <rect x="115" y="54" width="12" height="72" fill="url(#nextjs-grad)" />
+                  <defs>
+                    <linearGradient id="nextjs-grad" x1="121" y1="54" x2="121" y2="126" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="white" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                </g>
+              </svg>
               <span className="text-[11px] font-bold text-white uppercase tracking-wide">Next.js</span>
             </div>
 
-            {/* React — bottom left, pushed well outside the circle */}
+            {/* React badge — inline SVG, no CDN request */}
             <div
               className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
               style={{ bottom: '-2.5rem', left: '-3.5rem', animationDelay: '2s' }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" width={20} height={20} />
+              <svg width="20" height="20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="React">
+                <circle cx="50" cy="50" r="10" fill="#61DAFB"/>
+                <ellipse cx="50" cy="50" rx="45" ry="18" stroke="#61DAFB" strokeWidth="4" fill="none"/>
+                <ellipse cx="50" cy="50" rx="45" ry="18" stroke="#61DAFB" strokeWidth="4" fill="none" transform="rotate(60 50 50)"/>
+                <ellipse cx="50" cy="50" rx="45" ry="18" stroke="#61DAFB" strokeWidth="4" fill="none" transform="rotate(120 50 50)"/>
+              </svg>
               <span className="text-[11px] font-bold" style={{ color: '#61DAFB' }}>React</span>
             </div>
 
-            {/* JavaScript — mid right, pushed well outside the circle */}
+            {/* JavaScript badge — inline SVG, no CDN request */}
             <div
               className="absolute glass-card px-3 py-2 rounded-xl border border-white/15 shadow-lg backdrop-blur-xl animate-float flex items-center gap-2"
               style={{ top: '50%', right: '-4rem', transform: 'translateY(-50%)', animationDelay: '3.5s' }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width={20} height={20} />
+              <svg width="20" height="20" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-label="JavaScript">
+                <rect width="32" height="32" rx="3" fill="#F7DF1E"/>
+                <path d="M9.5 25.5 C9.5 27.5 10.7 28.5 12.7 28.5 C14.7 28.5 16 27.3 16 25.1 L16 15 L13.2 15 L13.2 25 C13.2 26 12.8 26.4 12.1 26.4 C11.4 26.4 11 25.9 10.8 25.3 Z" fill="#323330"/>
+                <path d="M18.5 25.1 C18.9 27 20.4 28.5 22.9 28.5 C25.4 28.5 27 27.1 27 25.1 C27 23.3 26 22.3 23.7 21.3 L22.8 20.9 C21.7 20.4 21.2 20.1 21.2 19.4 C21.2 18.8 21.7 18.4 22.4 18.4 C23.1 18.4 23.6 18.7 24 19.4 L26.2 18 C25.4 16.5 24.1 15.9 22.4 15.9 C20 15.9 18.5 17.4 18.5 19.4 C18.5 21.2 19.6 22.2 21.7 23.1 L22.6 23.5 C23.8 24.1 24.3 24.4 24.3 25.2 C24.3 25.9 23.7 26.4 22.8 26.4 C21.7 26.4 21.1 25.8 20.6 25 Z" fill="#323330"/>
+              </svg>
               <span className="text-[11px] font-bold" style={{ color: '#F7DF1E' }}>JS</span>
             </div>
 

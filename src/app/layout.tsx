@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { Outfit, Inter, Geist_Mono } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 
 const outfit = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -200,17 +197,28 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${outfit.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`dark ${outfit.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         <link rel="canonical" href="https://emran.work" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/* Preconnect to speed up Google Fonts loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preload LCP hero image */}
+        <link
+          rel="preload"
+          as="image"
+          href="/_next/image?url=%2Femran-hossen-developer-2026.webp&w=384&q=75"
+          type="image/webp"
+          fetchPriority="high"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col transition-colors duration-300">
+      <body className="min-h-full flex flex-col">
         {children}
       </body>
     </html>
