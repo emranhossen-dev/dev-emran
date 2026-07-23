@@ -28,7 +28,9 @@ import {
   Bell,
   CheckCheck,
   Send,
-  X
+  X,
+  ChevronRight,
+  User
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
 import { MessageItem } from '@/lib/db';
@@ -40,13 +42,13 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState<'all' | 'unread' | 'read'>('all');
   const [activeTab, setActiveTab] = useState<'inbox' | 'analytics' | 'database'>('inbox');
   const [search, setSearch] = useState('');
+  const [selectedMsgId, setSelectedMsgId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
   // Email Reply Modal State
   const [replyModalOpen, setReplyModalOpen] = useState(false);
-  const [selectedMsg, setSelectedMsg] = useState<MessageItem | null>(null);
   const [replySubject, setReplySubject] = useState('');
   const [replyBody, setReplyBody] = useState('');
   const [sendingEmail, setSendingEmail] = useState(false);
@@ -63,13 +65,16 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (data.messages) {
         setMessages(data.messages);
+        if (data.messages.length > 0 && !selectedMsgId) {
+          setSelectedMsgId(data.messages[0].id);
+        }
       }
     } catch {
       showToast('⚠️ Failed to refresh messages');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedMsgId]);
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -102,6 +107,10 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/contact?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setMessages((prev) => prev.filter((m) => m.id !== id));
+        if (selectedMsgId === id) {
+          const remaining = messages.filter((m) => m.id !== id);
+          setSelectedMsgId(remaining.length > 0 ? remaining[0].id : null);
+        }
         showToast('🗑️ Message deleted successfully');
       }
     } catch {
@@ -134,15 +143,17 @@ export default function AdminDashboard() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const activeMsg = messages.find((m) => m.id === selectedMsgId) || messages[0] || null;
+
   const openReplyModal = (msg: MessageItem) => {
-    setSelectedMsg(msg);
+    setSelectedMsgId(msg.id);
     setReplySubject(`Re: ${msg.subject || 'Portfolio Inquiry'}`);
     setReplyBody(`Hi ${msg.name},\n\nThank you for reaching out through my portfolio website! I would be delighted to work with you.\n\nBest regards,\nEmran Hossen`);
     setReplyModalOpen(true);
   };
 
   const sendResendEmail = async () => {
-    if (!selectedMsg || !replyBody) return;
+    if (!activeMsg || !replyBody) return;
     setSendingEmail(true);
 
     try {
@@ -150,9 +161,9 @@ export default function AdminDashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messageId: selectedMsg.id,
-          toEmail: selectedMsg.email,
-          toName: selectedMsg.name,
+          messageId: activeMsg.id,
+          toEmail: activeMsg.email,
+          toName: activeMsg.name,
           subject: replySubject,
           replyText: replyBody,
         }),
@@ -161,13 +172,13 @@ export default function AdminDashboard() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        showToast(`✉️ Email reply sent to ${selectedMsg.email} from dev@emran.work!`);
+        showToast(`✉️ Email reply sent to ${activeMsg.email} from dev@emran.work!`);
         setMessages((prev) =>
-          prev.map((m) => (m.id === selectedMsg.id ? { ...m, read: true } : m))
+          prev.map((m) => (m.id === activeMsg.id ? { ...m, read: true } : m))
         );
         setReplyModalOpen(false);
       } else {
-        showToast(`❌ Failed: ${data.error || 'Check Resend domain verification'}`);
+        showToast(`❌ Failed: ${data.error || 'Check Resend domain configuration'}`);
       }
     } catch (err: any) {
       showToast('❌ Error sending email reply');
@@ -191,7 +202,7 @@ export default function AdminDashboard() {
   const unreadCount = messages.filter((m) => !m.read).length;
 
   return (
-    <div className="min-h-screen w-full bg-[#070d1e] text-slate-100 flex relative overflow-hidden font-sans">
+    <div className="h-screen w-full bg-[#070d1e] text-slate-100 flex relative overflow-hidden font-sans">
       <SpaceBackground />
 
       {/* Floating Toast Notification */}
@@ -202,7 +213,7 @@ export default function AdminDashboard() {
       )}
 
       {/* ================= RESEND EMAIL REPLY MODAL ================= */}
-      {replyModalOpen && selectedMsg && (
+      {replyModalOpen && activeMsg && (
         <div className="fixed inset-0 z-[9990] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
           <div className="glass-card rounded-3xl p-6 sm:p-8 max-w-xl w-full border border-white/20 bg-[#0b1428] shadow-2xl relative space-y-5">
             
@@ -219,7 +230,7 @@ export default function AdminDashboard() {
 
               <button
                 onClick={() => setReplyModalOpen(false)}
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10"
+                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -231,7 +242,7 @@ export default function AdminDashboard() {
                 <input
                   type="text"
                   disabled
-                  value={`${selectedMsg.name} <${selectedMsg.email}>`}
+                  value={`${activeMsg.name} <${activeMsg.email}>`}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 font-semibold cursor-not-allowed"
                 />
               </div>
@@ -262,7 +273,7 @@ export default function AdminDashboard() {
               <button
                 type="button"
                 onClick={() => setReplyModalOpen(false)}
-                className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition-all"
+                className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -288,10 +299,11 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* ================= SIDEBAR ================= */}
-      <aside className="w-64 sm:w-72 bg-[#091124]/90 border-r border-white/10 backdrop-blur-2xl flex flex-col justify-between p-5 relative z-20 shrink-0 hidden md:flex min-h-screen">
+      {/* ================= FIXED SIDEBAR ================= */}
+      <aside className="w-64 sm:w-72 bg-[#091124] border-r border-white/10 flex flex-col justify-between p-5 relative z-20 shrink-0 hidden md:flex h-screen sticky top-0">
         
         <div className="space-y-8">
+          {/* Sidebar Brand Header */}
           <div className="flex items-center gap-3 px-2 pt-2">
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30 shrink-0">
               <ShieldCheck className="w-6 h-6" />
@@ -301,10 +313,11 @@ export default function AdminDashboard() {
                 <span>Emran</span>
                 <span className="text-indigo-400">Admin</span>
               </h2>
-              <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">dev@emran.work</p>
+              <p className="text-[10px] text-indigo-400 uppercase tracking-widest font-bold">dev@emran.work</p>
             </div>
           </div>
 
+          {/* Sidebar Navigation */}
           <nav className="space-y-1.5">
             <button
               onClick={() => setActiveTab('inbox')}
@@ -356,13 +369,14 @@ export default function AdminDashboard() {
           </nav>
         </div>
 
+        {/* Sidebar Footer Info */}
         <div className="pt-6 border-t border-white/10 space-y-3">
           <a
             href="/"
             className="w-full px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-2"
           >
             <Globe className="w-4 h-4 text-indigo-400" />
-            <span>Open Main Website</span>
+            <span>Open Main Portfolio</span>
           </a>
 
           <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
@@ -378,7 +392,7 @@ export default function AdminDashboard() {
 
             <button
               onClick={handleLogout}
-              className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
               title="Logout"
             >
               <LogOut className="w-4 h-4" />
@@ -388,14 +402,14 @@ export default function AdminDashboard() {
 
       </aside>
 
-      {/* ================= MAIN CONTENT CONTAINER ================= */}
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen relative z-10 overflow-y-auto">
+      {/* ================= MAIN WORKSPACE CONTAINER ================= */}
+      <div className="flex-1 flex flex-col min-w-0 h-screen relative z-10 overflow-hidden">
         
-        {/* Top Navbar */}
-        <header className="h-16 border-b border-white/10 bg-[#091124]/80 backdrop-blur-2xl px-6 flex items-center justify-between sticky top-0 z-30">
+        {/* FIXED TOP NAVBAR */}
+        <header className="h-16 border-b border-white/10 bg-[#091124]/90 backdrop-blur-2xl px-6 flex items-center justify-between shrink-0 sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <h1 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              <span>Message Communications</span>
+              <span>Inbox Communications</span>
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold hidden sm:inline-block">
                 🟢 Supabase DB &amp; Resend API Connected
               </span>
@@ -408,7 +422,7 @@ export default function AdminDashboard() {
               className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 text-indigo-400 ${loading ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline">Refresh Sync</span>
+              <span className="hidden sm:inline">Refresh Inbox</span>
             </button>
 
             <button
@@ -421,189 +435,213 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        {/* Dashboard Body Content */}
-        <div className="p-6 md:p-10 space-y-8 max-w-7xl w-full mx-auto">
+        {/* ================= GMAIL / LINEAR STYLE SPLIT INBOX BODY ================= */}
+        <div className="flex-1 flex overflow-hidden">
           
-          {/* Summary Stat Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* LEFT LIST COLUMN (LINE-WISE EMAIL ROWS) */}
+          <div className="w-full lg:w-[420px] border-r border-white/10 flex flex-col bg-[#091124]/60 shrink-0 h-[calc(100vh-4rem)]">
             
-            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-[#0b1428]/80 flex items-center justify-between shadow-2xl relative overflow-hidden">
-              <div className="space-y-1">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Total Inquiries</p>
-                <p className="text-3xl font-black text-white">{totalCount}</p>
-                <p className="text-[11px] text-slate-400">Received from portfolio contact form</p>
+            {/* List Filter Toolbar */}
+            <div className="p-3.5 border-b border-white/10 space-y-3 shrink-0">
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search sender, email, or message..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                />
               </div>
-              <div className="w-14 h-14 rounded-2xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
-                <Inbox className="w-7 h-7" />
+
+              <div className="flex items-center gap-1.5 justify-between">
+                {(['all', 'unread', 'read'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setFilter(tab)}
+                    className={`flex-1 py-1.5 rounded-lg text-[11px] font-bold capitalize transition-all cursor-pointer text-center ${
+                      filter === tab
+                        ? 'bg-indigo-600 text-white shadow'
+                        : 'bg-white/5 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {tab === 'all' ? 'All' : tab === 'unread' ? `Unread (${unreadCount})` : 'Read'}
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-[#0b1428]/80 flex items-center justify-between shadow-2xl relative overflow-hidden">
-              <div className="space-y-1">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Unread Messages</p>
-                <p className="text-3xl font-black text-amber-400">{unreadCount}</p>
-                <p className="text-[11px] text-amber-400/80 font-medium">Action required</p>
-              </div>
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center border border-amber-500/30">
-                <Bell className="w-7 h-7 animate-pulse" />
-              </div>
-            </div>
+            {/* Line-wise Email Rows Stream */}
+            <div className="flex-1 overflow-y-auto divide-y divide-white/5">
+              {filteredMessages.length === 0 ? (
+                <div className="p-10 text-center text-slate-400 text-xs">
+                  <Inbox className="w-8 h-8 text-slate-500 mx-auto mb-2 opacity-50" />
+                  <p>No messages match criteria</p>
+                </div>
+              ) : (
+                filteredMessages.map((msg) => {
+                  const isSelected = msg.id === (activeMsg?.id || '');
+                  return (
+                    <div
+                      key={msg.id}
+                      onClick={() => {
+                        setSelectedMsgId(msg.id);
+                        if (!msg.read) handleMarkRead(msg.id);
+                      }}
+                      className={`p-4 transition-all duration-200 cursor-pointer relative group ${
+                        isSelected
+                          ? 'bg-[#122045] border-l-4 border-indigo-500 shadow-md'
+                          : !msg.read
+                          ? 'bg-indigo-950/20 hover:bg-[#0e1936]'
+                          : 'hover:bg-white/5'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <div className="flex items-center gap-2.5 overflow-hidden">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white font-bold flex items-center justify-center text-xs shrink-0 shadow">
+                            {msg.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="truncate">
+                            <h4 className={`text-xs truncate ${!msg.read ? 'font-black text-white' : 'font-semibold text-slate-300'}`}>
+                              {msg.name}
+                            </h4>
+                            <p className="text-[11px] text-slate-400 truncate">{msg.email}</p>
+                          </div>
+                        </div>
 
-            <div className="glass-card p-6 rounded-3xl border border-white/10 bg-[#0b1428]/80 flex items-center justify-between shadow-2xl relative overflow-hidden">
-              <div className="space-y-1">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Processed / Read</p>
-                <p className="text-3xl font-black text-emerald-400">{totalCount - unreadCount}</p>
-                <p className="text-[11px] text-emerald-400/80 font-medium">Domain Email Replies (dev@emran.work)</p>
-              </div>
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
-                <CheckCheck className="w-7 h-7" />
-              </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          {!msg.read && <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />}
+                          <span className="text-[10px] text-slate-400 font-medium">
+                            {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className={`text-xs truncate pl-10 ${!msg.read ? 'font-bold text-indigo-300' : 'text-slate-300'}`}>
+                        {msg.subject || 'Portfolio Inquiry'}
+                      </p>
+
+                      <p className="text-[11px] text-slate-400 line-clamp-1 pl-10 mt-0.5 leading-relaxed">
+                        {msg.message}
+                      </p>
+                    </div>
+                  );
+                })
+              )}
             </div>
 
           </div>
 
-          {/* Search Bar & Filter Tabs */}
-          <div className="glass-card p-4 rounded-3xl border border-white/10 bg-[#0b1428]/80 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
-            
-            {/* Search Input */}
-            <div className="relative w-full md:w-96">
-              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search sender name, email, or text..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-900/80 border border-slate-700/70 text-white text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500 shadow-inner"
-              />
-            </div>
-
-            {/* Filter Tabs */}
-            <div className="flex items-center gap-2 w-full md:w-auto">
-              {(['all', 'unread', 'read'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setFilter(tab)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-all cursor-pointer ${
-                    filter === tab
-                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                      : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {tab === 'all' ? 'All Messages' : tab === 'unread' ? `Unread (${unreadCount})` : 'Read Messages'}
-                </button>
-              ))}
-            </div>
-
-          </div>
-
-          {/* Message List Stream */}
-          {filteredMessages.length === 0 ? (
-            <div className="glass-card rounded-3xl p-16 text-center border border-white/10 bg-[#0b1428]/60 shadow-2xl">
-              <MessageSquare className="w-14 h-14 text-indigo-400 mx-auto mb-4 opacity-40" />
-              <h3 className="text-lg font-bold text-white">No messages found</h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-                {messages.length === 0 ? 'No portfolio inquiries received yet. Visitors submitting the contact form will appear here live!' : 'No messages match your search or filter.'}
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-5">
-              {filteredMessages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`glass-card p-6 sm:p-7 rounded-3xl border transition-all duration-300 shadow-2xl ${
-                    !msg.read
-                      ? 'border-indigo-500/50 bg-[#0d1833] ring-1 ring-indigo-500/30'
-                      : 'border-white/10 bg-[#091124]/80'
-                  }`}
-                >
-                  {/* Card Header */}
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-4 border-b border-white/10">
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-black flex items-center justify-center text-lg shadow-md shrink-0">
-                        {msg.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2.5 flex-wrap">
-                          <h4 className="text-base font-bold text-white">{msg.name}</h4>
-                          {!msg.read && (
-                            <span className="px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                              Unread
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center gap-2 mt-1">
-                          <a
-                            href={`mailto:${msg.email}`}
-                            className="text-xs text-indigo-400 font-semibold hover:underline flex items-center gap-1"
-                          >
-                            <span>{msg.email}</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                          <button
-                            onClick={() => copyToClipboard(msg.email, msg.id)}
-                            className="text-slate-400 hover:text-white transition-colors p-1"
-                            title="Copy Email"
-                          >
-                            {copiedId === msg.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                          </button>
-                        </div>
-                      </div>
+          {/* RIGHT EMAIL DETAIL PANE */}
+          <div className="flex-1 bg-[#070d1e] overflow-y-auto p-6 lg:p-10 h-[calc(100vh-4rem)]">
+            {activeMsg ? (
+              <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+                
+                {/* Email Subject Title & Toolbar */}
+                <div className="glass-card p-6 rounded-3xl border border-white/10 bg-[#0b1428]/80 shadow-2xl space-y-4">
+                  
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-400">Portfolio Inquiry</span>
+                      <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
+                        {activeMsg.subject || 'Portfolio Inquiry'}
+                      </h2>
                     </div>
 
-                    <div className="flex items-center gap-2.5 flex-wrap">
-                      <span className="text-[11px] text-slate-400 font-medium flex items-center gap-1.5 mr-2">
-                        <Clock className="w-3.5 h-3.5 text-indigo-400" />
-                        {new Date(msg.createdAt).toLocaleString()}
-                      </span>
-
-                      {!msg.read && (
-                        <button
-                          onClick={() => handleMarkRead(msg.id)}
-                          className="px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 text-xs font-bold border border-emerald-500/30 transition-all cursor-pointer flex items-center gap-1.5"
-                          title="Mark as Read"
-                        >
-                          <CheckCircle className="w-3.5 h-3.5" />
-                          <span>Mark Read</span>
-                        </button>
-                      )}
-
+                    {/* Action Bar */}
+                    <div className="flex items-center gap-2 flex-wrap">
                       <button
-                        onClick={() => openReplyModal(msg)}
-                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                        onClick={() => openReplyModal(activeMsg)}
+                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2 cursor-pointer"
                       >
                         <Send className="w-3.5 h-3.5" />
                         <span>Send Reply (dev@emran.work)</span>
                       </button>
 
                       <button
-                        onClick={() => handleDelete(msg.id)}
-                        className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-all cursor-pointer"
+                        onClick={() => handleDelete(activeMsg.id)}
+                        className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-colors cursor-pointer"
                         title="Delete Message"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
-
                   </div>
 
-                  {/* Card Content Box */}
-                  <div className="space-y-2">
-                    {msg.subject && (
-                      <p className="text-xs font-bold text-slate-400">
-                        Subject: <span className="text-white font-extrabold">{msg.subject}</span>
-                      </p>
-                    )}
-                    <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 text-sm text-slate-200 leading-relaxed whitespace-pre-wrap">
-                      {msg.message}
+                  {/* Sender Profile Strip */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white font-black flex items-center justify-center text-lg shadow-lg shrink-0">
+                        {activeMsg.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-base font-bold text-white">{activeMsg.name}</h3>
+                          {!activeMsg.read && (
+                            <span className="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                              Unread
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <a
+                            href={`mailto:${activeMsg.email}`}
+                            className="text-xs text-indigo-400 font-semibold hover:underline flex items-center gap-1"
+                          >
+                            <span>{activeMsg.email}</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                          <button
+                            onClick={() => copyToClipboard(activeMsg.email, activeMsg.id)}
+                            className="text-slate-400 hover:text-white transition-colors p-1"
+                            title="Copy Email"
+                          >
+                            {copiedId === activeMsg.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-xs text-slate-400 flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>{new Date(activeMsg.createdAt).toLocaleString()}</span>
                     </div>
                   </div>
 
                 </div>
-              ))}
-            </div>
-          )}
+
+                {/* Formatted Message Body Paper Container */}
+                <div className="glass-card p-7 sm:p-8 rounded-3xl border border-white/10 bg-[#0b1428]/90 shadow-2xl space-y-4">
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-white/5 pb-2">
+                    Message Content
+                  </p>
+                  <div className="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap font-sans">
+                    {activeMsg.message}
+                  </div>
+                </div>
+
+                {/* Quick Reply Button Bottom Bar */}
+                <div className="pt-2">
+                  <button
+                    onClick={() => openReplyModal(activeMsg)}
+                    className="w-full py-4 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xl"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Click to Write &amp; Send Reply Email from dev@emran.work</span>
+                  </button>
+                </div>
+
+              </div>
+            ) : (
+              <div className="h-full flex items-center justify-center text-center p-12">
+                <div>
+                  <Inbox className="w-16 h-16 text-indigo-400 mx-auto mb-4 opacity-40 animate-pulse" />
+                  <h3 className="text-lg font-bold text-white">Select a Message</h3>
+                  <p className="text-xs text-slate-400 mt-1">Choose an email from the left inbox list to view details</p>
+                </div>
+              </div>
+            )}
+          </div>
 
         </div>
       </div>

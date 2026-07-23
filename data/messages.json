@@ -6,7 +6,7 @@
     "subject": "Portfolio Inquiry",
     "message": "hi",
     "createdAt": "2026-07-23T00:57:33.198Z",
-    "read": false
+    "read": true
   },
   {
     "id": "msg_1784767813445_nmbst",
@@ -15,7 +15,7 @@
     "subject": "Full Stack Project Collaboration",
     "message": "Hello Emran! We would love to offer you a remote Next.js lead developer project.",
     "createdAt": "2026-07-23T00:50:13.445Z",
-    "read": false
+    "read": true
   },
   {
     "id": "msg_1784767561971_vgo2b",
@@ -24,7 +24,7 @@
     "subject": "Custom Web Application Inquiry",
     "message": "Hi Emran, I love your portfolio design! Can we build a SaaS web app together?",
     "createdAt": "2026-07-23T00:46:01.972Z",
-    "read": false
+    "read": true
   },
   {
     "id": "msg_1784767419472_s8g1r",
