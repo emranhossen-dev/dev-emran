@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         const resend = new Resend(resendApiKey);
         await resend.emails.send({
           from: 'Portfolio Notification <onboarding@resend.dev>',
-          to: ['emran40989@gmail.com'],
+          to: ['dev@emran.work', 'emran40989@gmail.com'],
           subject: `🔔 New Inquiry from ${name}: ${subject || 'Portfolio Contact'}`,
           html: `
             <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; color: #0f172a;">
