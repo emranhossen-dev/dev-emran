@@ -10,6 +10,7 @@ export interface MessageItem {
   message: string;
   createdAt: string;
   read: boolean;
+  folder?: 'inbox' | 'sent' | 'draft' | 'trash';
 }
 
 const dataDir = path.join(process.cwd(), 'data');
@@ -31,7 +32,7 @@ function getPool(): Pool | null {
         connectionTimeoutMillis: 5000,
       });
 
-      // Ensure messages table exists in Supabase
+      // Ensure messages table and folder column exist in Supabase
       globalPool.query(`
         CREATE TABLE IF NOT EXISTS messages (
           id TEXT PRIMARY KEY,
@@ -40,8 +41,10 @@ function getPool(): Pool | null {
           subject TEXT,
           message TEXT NOT NULL,
           created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-          read BOOLEAN DEFAULT FALSE
+          read BOOLEAN DEFAULT FALSE,
+          folder TEXT DEFAULT 'inbox'
         );
+        ALTER TABLE messages ADD COLUMN IF NOT EXISTS folder TEXT DEFAULT 'inbox';
       `).catch((err) => console.error('[Supabase Init Error]:', err.message));
     } catch (err) {
       console.error('[Supabase Connection Error]:', err);
@@ -75,6 +78,7 @@ export async function getMessages(): Promise<MessageItem[]> {
         message: row.message,
         createdAt: row.created_at ? new Date(row.created_at).toISOString() : new Date().toISOString(),
         read: Boolean(row.read),
+        folder: (row.folder || 'inbox') as 'inbox' | 'sent' | 'draft' | 'trash',
       }));
     } catch (err) {
       console.error('[Supabase Fetch Error, using fallback]:', err);
@@ -84,31 +88,34 @@ export async function getMessages(): Promise<MessageItem[]> {
   ensureDataFile();
   try {
     const data = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    return parsed.map((m: any) => ({ ...m, folder: m.folder || 'inbox' }));
   } catch {
     return [];
   }
 }
 
-// Save a new message to Supabase Cloud DB
-export async function saveMessage(msg: Omit<MessageItem, 'id' | 'createdAt' | 'read'>): Promise<MessageItem> {
+// Save a new message (inbox, sent, draft)
+export async function saveMessage(
+  msg: Omit<MessageItem, 'id' | 'createdAt' | 'read'> & { folder?: 'inbox' | 'sent' | 'draft' | 'trash' }
+): Promise<MessageItem> {
   const id = 'msg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
   const createdAt = new Date().toISOString();
+  const folder = msg.folder || 'inbox';
   const pool = getPool();
 
   if (pool) {
     try {
       await pool.query(
-        'INSERT INTO messages (id, name, email, subject, message, created_at, read) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-        [id, msg.name, msg.email, msg.subject || 'Portfolio Inquiry', msg.message, createdAt, false]
+        'INSERT INTO messages (id, name, email, subject, message, created_at, read, folder) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+        [id, msg.name, msg.email, msg.subject || 'Portfolio Inquiry', msg.message, createdAt, folder === 'sent', folder]
       );
-      console.log('✓ Saved message to Supabase DB:', id);
+      return { id, name: msg.name, email: msg.email, subject: msg.subject, message: msg.message, createdAt, read: folder === 'sent', folder };
     } catch (err) {
       console.error('[Supabase Insert Error, saving locally]:', err);
     }
   }
 
-  // Backup to local file as well
   ensureDataFile();
   const messages = JSON.parse(fs.readFileSync(filePath, 'utf-8') || '[]');
   const newMessage: MessageItem = {
@@ -118,7 +125,8 @@ export async function saveMessage(msg: Omit<MessageItem, 'id' | 'createdAt' | 'r
     subject: msg.subject || 'Portfolio Inquiry',
     message: msg.message,
     createdAt,
-    read: false,
+    read: folder === 'sent',
+    folder,
   };
 
   messages.unshift(newMessage);

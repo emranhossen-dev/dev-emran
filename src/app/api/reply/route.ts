@@ -60,6 +60,15 @@ export async function POST(req: NextRequest) {
       await markAsRead(messageId);
     }
 
+    // Save sent email into Sent folder in database
+    await saveMessage({
+      name: `To: ${toName || toEmail}`,
+      email: toEmail,
+      subject: subject || 'Re: Portfolio Inquiry',
+      message: replyText,
+      folder: 'sent',
+    });
+
     return NextResponse.json({
       success: true,
       message: `Email reply successfully sent to ${toEmail} from dev@emran.work!`,
