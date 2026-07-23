@@ -24,12 +24,7 @@ import {
   FileText,
   SendHorizontal,
   Plus,
-  Minus,
-  Maximize2,
-  Paperclip,
-  Star,
-  Archive,
-  MoreVertical,
+  Bell,
   CheckCheck
 } from 'lucide-react';
 import SpaceBackground from '@/components/SpaceBackground';
@@ -48,8 +43,7 @@ export default function AdminDashboard() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
-  // Gmail Inline Reply Box State (No Popup!)
-  const [inlineReplyOpen, setInlineReplyOpen] = useState(false);
+  // Gmail Inline Reply Box State
   const [replyText, setReplyText] = useState('');
   const [sendingReply, setSendingReply] = useState(false);
 
@@ -78,7 +72,8 @@ export default function AdminDashboard() {
       }
     } catch {
       showToast('⚠️ Failed to refresh emails');
-    } finally {
+    } font-sans
+    finally {
       setLoading(false);
     }
   }, [selectedMsgId]);
@@ -171,7 +166,13 @@ export default function AdminDashboard() {
 
   const activeMsg = messages.find((m) => m.id === selectedMsgId) || filteredMessages[0] || null;
 
-  // Send Inline Reply via Resend API (No Modal!)
+  useEffect(() => {
+    if (activeMsg) {
+      setReplyText(`Hi ${activeMsg.name},\n\nThank you for reaching out through my portfolio website! I would be delighted to work with you.\n\nBest regards,\nEmran Hossen`);
+    }
+  }, [activeMsg]);
+
+  // Send Inline Reply via Resend API
   const handleSendInlineReply = async () => {
     if (!activeMsg || !replyText.trim()) return;
     setSendingReply(true);
@@ -193,8 +194,6 @@ export default function AdminDashboard() {
 
       if (res.ok && data.success) {
         showToast(`✉️ Sent email reply to ${activeMsg.email} from dev@emran.work!`);
-        setReplyText('');
-        setInlineReplyOpen(false);
         fetchMessages();
       } else {
         showToast(`❌ Failed: ${data.error || 'Check Resend domain setup'}`);
@@ -261,7 +260,6 @@ export default function AdminDashboard() {
       {/* ================= GMAIL DOCKED BOTTOM-RIGHT COMPOSE BOX ================= */}
       {composeOpen && (
         <div className="fixed bottom-0 right-6 sm:right-12 z-[9990] w-full max-w-lg bg-[#0b1428] rounded-t-2xl border border-white/20 shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden animate-slide-up">
-          {/* Header */}
           <div className="bg-[#121f3f] px-4 py-3 border-b border-white/10 flex items-center justify-between">
             <h3 className="text-xs font-bold text-white flex items-center gap-2">
               <Mail className="w-4 h-4 text-indigo-400" />
@@ -275,7 +273,6 @@ export default function AdminDashboard() {
             </button>
           </div>
 
-          {/* Form */}
           <div className="p-4 space-y-3 text-xs bg-[#0b1428]">
             <input
               type="email"
@@ -350,8 +347,6 @@ export default function AdminDashboard() {
 
           {/* Gmail Sidebar Folder Navigation */}
           <nav className="space-y-1">
-            
-            {/* Inbox */}
             <button
               onClick={() => setActiveFolder('inbox')}
               className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${
@@ -371,7 +366,6 @@ export default function AdminDashboard() {
               )}
             </button>
 
-            {/* Sent */}
             <button
               onClick={() => setActiveFolder('sent')}
               className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${
@@ -389,7 +383,6 @@ export default function AdminDashboard() {
               )}
             </button>
 
-            {/* Drafts */}
             <button
               onClick={() => setActiveFolder('draft')}
               className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${
@@ -407,7 +400,6 @@ export default function AdminDashboard() {
               )}
             </button>
 
-            {/* All Mail */}
             <button
               onClick={() => setActiveFolder('all')}
               className={`w-full px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${
@@ -422,7 +414,6 @@ export default function AdminDashboard() {
               </div>
               <span className="text-[10px] text-slate-400 font-bold">{messages.length}</span>
             </button>
-
           </nav>
         </div>
 
@@ -496,7 +487,7 @@ export default function AdminDashboard() {
         <div className="flex-1 flex overflow-hidden">
           
           {/* LEFT EMAIL LIST COLUMN (LINE-WISE EMAIL ROWS) */}
-          <div className="w-full lg:w-[420px] border-r border-white/10 flex flex-col bg-[#091124]/60 shrink-0 h-[calc(100vh-4rem)]">
+          <div className="w-full lg:w-[400px] xl:w-[440px] border-r border-white/10 flex flex-col bg-[#091124]/60 shrink-0 h-[calc(100vh-4rem)]">
             
             {/* Search Input */}
             <div className="p-3.5 border-b border-white/10 shrink-0">
@@ -575,15 +566,16 @@ export default function AdminDashboard() {
 
           </div>
 
-          {/* RIGHT EMAIL DETAIL & INLINE REPLY PANE (NO POPUP!) */}
+          {/* RIGHT EMAIL READING PAPER & INLINE EMBEDDED REPLY WORKSPACE */}
           <div className="flex-1 bg-[#070d1e] overflow-y-auto p-6 lg:p-10 h-[calc(100vh-4rem)]">
             {activeMsg ? (
-              <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-16">
+              <div className="max-w-4xl mx-auto animate-fade-in pb-16">
                 
-                {/* Email Subject Title & Toolbar */}
-                <div className="glass-card p-6 rounded-3xl border border-white/10 bg-[#0b1428]/80 shadow-2xl space-y-4">
+                {/* UNIFIED GMAIL ELEGANT READING PAPER CARD */}
+                <div className="glass-card rounded-3xl border border-white/10 bg-[#091124] shadow-2xl p-6 sm:p-8 space-y-6">
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                  {/* Top Subject Title Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
                     <div>
                       <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-400">
                         {activeMsg.folder === 'sent' ? 'Sent Email' : 'Received Portfolio Email'}
@@ -593,28 +585,20 @@ export default function AdminDashboard() {
                       </h2>
                     </div>
 
-                    {/* Action Bar */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <button
-                        onClick={() => setInlineReplyOpen(!inlineReplyOpen)}
-                        className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition-all flex items-center gap-2 cursor-pointer"
-                      >
-                        <SendHorizontal className="w-3.5 h-3.5" />
-                        <span>Reply</span>
-                      </button>
-
+                    <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleDelete(activeMsg.id)}
-                        className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 transition-colors cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
                         title="Delete Email"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Delete</span>
                       </button>
                     </div>
                   </div>
 
-                  {/* Sender Profile Strip */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                  {/* Sender Profile Details Strip */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
                     <div className="flex items-center gap-3.5">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white font-black flex items-center justify-center text-lg shadow-lg shrink-0">
                         {activeMsg.name.charAt(0).toUpperCase()}
@@ -653,47 +637,30 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                </div>
-
-                {/* Formatted Message Content Card */}
-                <div className="glass-card p-7 sm:p-8 rounded-3xl border border-white/10 bg-[#0b1428]/90 shadow-2xl space-y-4">
-                  <p className="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-white/5 pb-2">
-                    Message Body
-                  </p>
-                  <div className="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap font-sans">
-                    {activeMsg.message}
+                  {/* High Contrast Formatted Message Content Area */}
+                  <div className="py-2">
+                    <div className="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap font-sans border-l-2 border-indigo-500/40 pl-4 py-1">
+                      {activeMsg.message}
+                    </div>
                   </div>
-                </div>
 
-                {/* ================= GMAIL INLINE EMBEDDED REPLY BOX (NO POPUP!) ================= */}
-                {inlineReplyOpen ? (
-                  <div className="glass-card p-6 rounded-3xl border border-indigo-500/40 bg-[#0d1733] shadow-2xl space-y-4 animate-fade-in">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  {/* INTEGRATED GMAIL INLINE EMAIL REPLY WORKSPACE */}
+                  <div className="pt-6 border-t border-white/10 space-y-4">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-xs font-bold text-white">
                         <SendHorizontal className="w-4 h-4 text-indigo-400" />
-                        <span>Reply from: dev@emran.work</span>
+                        <span>Reply from: <span className="text-indigo-400 font-extrabold">dev@emran.work</span></span>
                       </div>
-                      <button
-                        onClick={() => setInlineReplyOpen(false)}
-                        className="text-slate-400 hover:text-white text-xs font-semibold"
-                      >
-                        Cancel
-                      </button>
+                      <span className="text-[10px] text-slate-400">Resend API Connected</span>
                     </div>
 
-                    <div className="text-xs space-y-3">
-                      <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-semibold">
-                        To: <span className="text-white">{activeMsg.name} &lt;{activeMsg.email}&gt;</span>
-                      </div>
-
-                      <textarea
-                        rows={6}
-                        value={replyText}
-                        onChange={(e) => setReplyText(e.target.value)}
-                        placeholder={`Write your reply to ${activeMsg.name}...`}
-                        className="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500 leading-relaxed"
-                      />
-                    </div>
+                    <textarea
+                      rows={5}
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                      placeholder={`Write your email reply to ${activeMsg.name}...`}
+                      className="w-full p-4 rounded-2xl bg-slate-900 border border-slate-700/80 text-white text-xs placeholder-slate-400 focus:outline-none focus:border-indigo-500 leading-relaxed shadow-inner"
+                    />
 
                     <div className="flex items-center justify-between pt-1">
                       <button
@@ -711,21 +678,11 @@ export default function AdminDashboard() {
                         )}
                       </button>
 
-                      <span className="text-[10px] text-slate-400">Resend API • dev@emran.work</span>
+                      <span className="text-[10px] text-slate-400">Direct Delivery to {activeMsg.email}</span>
                     </div>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setReplyText(`Hi ${activeMsg.name},\n\nThank you for reaching out through my portfolio website! I would be delighted to work with you.\n\nBest regards,\nEmran Hossen`);
-                      setInlineReplyOpen(true);
-                    }}
-                    className="w-full py-4 rounded-2xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xl"
-                  >
-                    <SendHorizontal className="w-4 h-4 text-indigo-400" />
-                    <span>Click to Reply from dev@emran.work</span>
-                  </button>
-                )}
+
+                </div>
 
               </div>
             ) : (
@@ -733,7 +690,7 @@ export default function AdminDashboard() {
                 <div>
                   <Inbox className="w-16 h-16 text-indigo-400 mx-auto mb-4 opacity-40 animate-pulse" />
                   <h3 className="text-lg font-bold text-white">Select an Email</h3>
-                  <p className="text-xs text-slate-400 mt-1">Choose an email from the left list to view or send replies</p>
+                  <p className="text-xs text-slate-400 mt-1">Choose an email from the left list to view details or send replies</p>
                 </div>
               </div>
             )}
