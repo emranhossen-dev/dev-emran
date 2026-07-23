@@ -1,5 +1,23 @@
 [
   {
+    "id": "msg_1784767813445_nmbst",
+    "name": "Mahbub Alam",
+    "email": "mahbub@tech.com",
+    "subject": "Full Stack Project Collaboration",
+    "message": "Hello Emran! We would love to offer you a remote Next.js lead developer project.",
+    "createdAt": "2026-07-23T00:50:13.445Z",
+    "read": false
+  },
+  {
+    "id": "msg_1784767561971_vgo2b",
+    "name": "Tanvir Hossain",
+    "email": "tanvir@work.com",
+    "subject": "Custom Web Application Inquiry",
+    "message": "Hi Emran, I love your portfolio design! Can we build a SaaS web app together?",
+    "createdAt": "2026-07-23T00:46:01.972Z",
+    "read": false
+  },
+  {
     "id": "msg_1784767419472_s8g1r",
     "name": "Rahim Ahmed",
     "email": "rahim.test@example.com",

